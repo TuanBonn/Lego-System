@@ -17,11 +17,11 @@ const Product = new Schema({
     description: {type: String, maxLength: 255},
     status: {type: String},
     ratting: {type: Number},
-    themeId:{
+    theme:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Theme'
     },
-    categoryId:{
+    category:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     },

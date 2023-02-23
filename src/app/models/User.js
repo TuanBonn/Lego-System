@@ -6,7 +6,7 @@ const User = new Schema({
     email: {type: String, maxLength: 255},
     address: {type: String, maxLength: 255},
     phonenumber: {type: String, maxLength: 255},
-    accountId:{
+    account:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
     },
