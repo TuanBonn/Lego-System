@@ -7,12 +7,24 @@ mongoose.plugin(slug);
 
 const Product = new Schema({
     name: {type: String, maxLength: 255},
+    age: {type: Number},
     price: {type: Number},
     quantity: {type: Number},
     slug: {type: String, slug: 'name', unique: true},
     img1: {type: String, maxLength: 255},
     img2: {type: String, maxLength: 255},
     img3: {type: String, maxLength: 255},
+    description: {type: String, maxLength: 255},
+    status: {type: String},
+    ratting: {type: Number},
+    themeId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Theme'
+    },
+    categoryId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    },
 })
 
 module.exports = mongoose.model('Product', Product);
