@@ -2,14 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const HomeController = require('../app/controllers/HomeController');
+const security = require('../security/authentication');
 
 // newsController.index;
-router.get('/', HomeController.index);
+router.get('/',security.auth, HomeController.index);
 router.get('/insertCategory', HomeController.insertCategory);
 router.get('/insertTheme', HomeController.insertTheme);
 router.get('/insertProduct', HomeController.insert);
 router.get('/insertAccount', HomeController.insertAccount);
 router.get('/insertUser', HomeController.insertUser);
+router.get('/setcookie', HomeController.testCookie);
 
 
 module.exports = router;

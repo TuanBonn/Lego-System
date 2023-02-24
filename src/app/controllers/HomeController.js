@@ -97,6 +97,12 @@ class NewsController {
             res.redirect('/');
         }).catch(err=>console.log(err));
     }
+
+    testCookie(req, res, next){
+        res.cookie('user', "1234");
+        res.send('HI');
+        console.log(req.cookies);
+    }
 }
 //make object NewsController to use in another file
 module.exports = new NewsController();

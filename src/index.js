@@ -7,6 +7,7 @@ const { engine } = require('express-handlebars');
 const route = require('./routes');
 const db = require('./config/db');
 const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
 
 db.connect();
 
@@ -27,6 +28,7 @@ app.use(
 );
 app.use(express.json());
 app.use(methodOverride('_method'));
+app.use(cookieParser());
 
 
 
