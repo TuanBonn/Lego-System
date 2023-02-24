@@ -28,7 +28,7 @@ app.use(
 );
 app.use(express.json());
 app.use(methodOverride('_method'));
-app.use(cookieParser());
+app.use(cookieParser('secret'));
 
 
 

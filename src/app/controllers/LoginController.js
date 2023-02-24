@@ -31,7 +31,9 @@ class LoginController {
                     return;
                 }else{
                     if(account.role === "USER"){
-                        res.cookie('userId', account._id);
+                        res.cookie('userId', account._id, {
+                            signed: true
+                        });
                         res.redirect('/');
                     }else{
                         res.render('admin/homeAdmin');
