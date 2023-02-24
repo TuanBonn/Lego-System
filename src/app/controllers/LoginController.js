@@ -8,10 +8,10 @@ var MongoClient = require('mongodb').MongoClient;
 
 class LoginController {
     //[GET] /news
-    login(req, res, next) {
+    login(req, res) {
         res.render('login');
     }
-    checkLogin(req, res, next){
+    checkLogin(req, res){
         const username = req.body.username;
         const password = req.body.password;
 
@@ -43,6 +43,9 @@ class LoginController {
             
         })
         .catch(err=>console.log(err))
+    }
+    register(req, res){
+        res.render('register', {register: true});
     }
 }
 //make object NewsController to use in another file
