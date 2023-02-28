@@ -7,7 +7,7 @@ const Cart = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     },
-    userid:{
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }

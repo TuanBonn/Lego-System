@@ -11,7 +11,8 @@
             <img src="/img/register-img.png" alt="" srcset="">
         </div>
         <div class="register-form">
-            <form action="" method="post">
+            <form action="/auth/register" method="post">
+                <span class="message">{{message}}</span>
                 <div class="register-input">
                     <span class="register-input-tag">Your email address</span>
                     <input type="text" name="email" id="">
@@ -26,7 +27,7 @@
                 </div>
                 <div class="register-input">
                     <span class="register-input-tag">Confirm your password</span>
-                    <input type="text" name="password-confirm" id="">
+                    <input type="text" name="passwordConfirm" id="">
                 </div>
                 <div class="register-input-submit">
                     <button type="submit" class="btn btn-color px-5 mb-5 w-100">Sign Up</button>

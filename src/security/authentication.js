@@ -3,7 +3,7 @@ const Account = require('../app/models/Account');
 class auth{
     auth(req, res, next){
         if(!req.signedCookies.userId){
-            res.redirect('auth/login');
+            res.redirect('/auth/login');
             return;
         }else{
             Account.findOne({_id: req.signedCookies.userId})
@@ -13,7 +13,6 @@ class auth{
                     res.redirect('auth/login');
                     return;
                 }else{
-                    res.locals.account = account;
                     next();
                 }
             })

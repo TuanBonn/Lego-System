@@ -3,6 +3,8 @@ const Category = require('../models/Category');
 const Theme = require('../models/Theme');
 const Account = require('../models/Account');
 const User = require('../models/User');
+const Cart = require('../models/Cart');
+
 
 const {convertToObject} = require('../../util/mongoose');
 const {convertToArrayObjects} = require('../../util/mongoose');
@@ -10,7 +12,7 @@ var url = 'mongodb://127.0.0.1:27017';
 var MongoClient = require('mongodb').MongoClient;
 
 class NewsController {
-    //[GET] /news
+    //render all products to homepage with two ways - NQT 27/2/2023
     index(req, res, next) {
         // async function hi(){
         //     let client = await MongoClient.connect(url);
@@ -26,6 +28,89 @@ class NewsController {
         
     }
 
+    product(req, res){
+        Product.findOne({
+            slug: req.params.slug
+        }).populate('theme').populate('category')
+        .then(product=>{
+            Product.find({})
+            .then(products=>{
+                console.log({product: convertToObject(product), products});
+                res.render('user/viewProduct', {product: convertToObject(product), products: convertToArrayObjects(products)})
+            })
+        })
+        .catch(err=>console.log(err)); 
+    }
+
+    addToBag(req, res){
+        if(!req.signedCookies.userId){
+            res.redirect('/auth/login');
+            return;
+        }else{
+            console.log(req.signedCookies.userId)
+            const form = req.body;
+            const newCartItem = new Cart();
+            newCartItem.product = form.product;
+            newCartItem.quantity = form.quantity;
+            newCartItem.user = req.signedCookies.userId;
+            console.log(newCartItem);
+            Cart.findOne({user: req.signedCookies.userId, product: form.product})
+            .then(cartItem=>{
+                if(cartItem !== null){
+                    console.log('Existed'+cartItem);
+                    res.redirect('/product/'+form.slug);
+                }else{
+                    if(form.quantity>form.currentQuantity){
+                        res.redirect('/product/'+form.slug);
+                    }else if(form.quantity<1){
+                        res.redirect('/product/'+form.slug);
+                    }else{
+                        newCartItem.save()
+                        .then(()=>res.redirect('/product/'+form.slug))
+                        .catch(err=>console.log(err));
+                    }
+                }
+            })
+        }
+    }
+
+    cart(req, res){
+        Cart.find({}).populate('product')
+        .then(carts=>{
+            var total = 0;
+            carts.forEach(element => {
+                total = total + element.product.price * element.quantity;
+            });
+            res.render('user/cart', {carts: convertToArrayObjects(carts), total: total});
+        }).catch(err=>console.log(err));
+        
+    }
+
+    updateItem(req, res){
+        res.send('updated')
+    }
+
+    deleteItem(req, res){
+        res.send('deleted');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Insert db
     insertTheme(req, res, next){
         const cate = new Theme();
         cate.name = "DC";
@@ -89,7 +174,7 @@ class NewsController {
         us.phonenumber = "0123456789";
         us.email = "alo@gmail.com";
         us.address = "alo - alo - alo - HN";
-        us.account = "63f784f0fe0aa17dd9f2e562";
+        us.account = "63fd7352bcd449ebcef10058";
 
 
         us.save().then(()=>{
