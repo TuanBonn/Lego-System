@@ -41,7 +41,7 @@ class LoginController {
                         });
                         res.redirect('/');
                     }else{
-                        res.render('admin/homeAdmin');
+                        res.render('admin/homeAdmin', {admin: true});
                     }
                 }
             }

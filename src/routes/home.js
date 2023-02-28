@@ -42,6 +42,7 @@ router.get('/insertProduct', HomeController.insert);
 router.get('/insertAccount', HomeController.insertAccount);
 router.get('/insertUser', HomeController.insertUser);
 router.get('/setcookie', HomeController.testCookie);
+router.get('/insertAdmin', HomeController.insertAdminAccount);
 
 
 module.exports = router;
