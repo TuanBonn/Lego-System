@@ -9,7 +9,7 @@ var MongoClient = require('mongodb').MongoClient;
 class LoginController {
     //[GET] /news
     index(req, res) {
-        res.render('admin/homeAdmin');
+        res.render('admin/homeAdmin', {admin: true});
     }
 }
 //make object NewsController to use in another file

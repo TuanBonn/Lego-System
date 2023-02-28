@@ -41,7 +41,10 @@ class LoginController {
                         });
                         res.redirect('/');
                     }else{
-                        res.render('admin/homeAdmin', {admin: true});
+                        res.cookie('adminId', account._id, {
+                            signed: true
+                        });
+                        res.redirect('/admin/');
                     }
                 }
             }
