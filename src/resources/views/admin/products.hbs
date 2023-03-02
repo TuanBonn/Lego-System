@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-<div class="header">
+    <div class="header">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light"> 
 
@@ -50,12 +50,35 @@
 </div>
 
 
+    {{!-- <form action="#">
+      <input type="text" placeholder="Search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+    </form> --}}
 
-    <h1>THIS IS HOME ADMIN PAGE</h1>
-        <h2><a href="/admin/products" class="btn btn-warning">Go to Product Management Page</a></h2>
-        <h2><a href="#" class="btn btn-warning">Go to Order Management Page</a></h2>
-
-
+     <h1 style="text-align:center">PRODUCTS LIST</h1>
+     <a href="/admin/addProduct" class="btn btn-primary">Add product</a>
+     <table class="table">
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>price</th>
+            <th>quantity</th>
+            <th>rating</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+    <tbody>
+    {{#each products}}  
+    <tr>    
+    <td>{{this.name}}</td>
+    <td>{{this.price}} $ </td>
+    <td>{{this.quantity}}</td>
+    <td>{{this.ratting}}</td>
+    <td><a href="/admin/updateProduct/{{this._id}}" class="btn btn-info">Edit</a> <a href="/admin/deleteProduct/{{this._id}}" class="btn btn-warning">Delete</a> </td>
+    </tr>
+    {{/each}}
+    </tbody>
+    </table>
 
 <div class="wrap-footer">
     <footer class=" text-lg-start">
