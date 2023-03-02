@@ -68,11 +68,10 @@ class NewsController {
                         res.redirect('/product/'+form.slug);
                     }else if(form.quantity<1){
                         res.redirect('/product/'+form.slug);
-                    }else{
+                    }
                         newCartItem.save()
                         .then(()=>res.redirect('/product/'+form.slug))
                         .catch(err=>console.log(err));
-                    }
                 }
             })
         }
@@ -91,15 +90,33 @@ class NewsController {
     }
 
     updateItem(req, res){
-        res.send('updated')
+        const form = req.body;
+        Product.findOne({_id: form.product})
+        .then(product=>{
+            if(product.quantity<form.quantity){
+                res.redirect('/cart');
+            }else if(form.quantity<0){
+                res.redirect('/cart');
+            }
+            else{
+                Cart.updateOne({_id: form._id}, {quantity: form.quantity})
+                .then(res.redirect('/cart'))
+                .catch(err=>console.log(err));
+            }
+        })
     }
 
     deleteItem(req, res){
-        res.send('deleted');
+        const form = req.body;
+        Cart.deleteOne({_id: form._id})
+        .then(res.redirect('/cart'))
+        .catch(err=>console.log(err));
     }
 
 
-
+    payment(req, res){
+        res.render('user/payment');
+    }
 
 
 
@@ -174,19 +191,18 @@ class NewsController {
 
     insert(req, res, next){
         const prod = new Product();
-        prod.name = "Lego";
+        prod.name = "2 Fast 2 Furious Nissan";
         prod.age = 2;
-        prod.price = 120000;
+        prod.price = 24;
         prod.quantity = 30;
-        prod.slug = "Lego";
         prod.img1 = "1";
         prod.img2 = "2";
         prod.img3 = "3";
         prod.description = "hahaha";
         prod.status = "EXIST";
-        prod.ratting = 3;
-        prod.theme = "63f78061c3fda0dcf591d857";
-        prod.category = "63f77f0cc3fda0dcf591d855"
+        prod.ratting = 5;
+        prod.theme = "63fd71c0bcd449ebcef1001d";
+        prod.category = "63fd761dc94a88b6ef9be5c2"
         prod.save().then(()=>{
             console.log('Insert Success');
             res.redirect('/');
