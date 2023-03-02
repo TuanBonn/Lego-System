@@ -7,20 +7,19 @@ const mongoose = require('mongoose')
 
 const {convertToObject} = require('../../util/mongoose');
 const {convertToArrayObjects} = require('../../util/mongoose');
-<<<<<<< HEAD
+
 const { ObjectId } = require('mongodb');
-=======
+
 const { response } = require('express');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
->>>>>>> 1d4286d88f75c5516dd54c7bfd5a9966739da3a0
+
 var url = 'mongodb://127.0.0.1:27017';
 var MongoClient = require('mongodb').MongoClient;
 
 
 
 class LoginController {
-<<<<<<< HEAD
     
     detail(req, res) {
         User.findOne({account: new ObjectId(req.signedCookies.adminId)}).populate('account').then(user=>{
@@ -33,7 +32,7 @@ class LoginController {
     }
 
   
-=======
+
     //[GET] /news
     index(req, res) {
         res.render('admin/homeAdmin', {admin: true});
@@ -107,7 +106,6 @@ class LoginController {
 
     //search product
 
->>>>>>> 1d4286d88f75c5516dd54c7bfd5a9966739da3a0
 }
 //make object NewsController to use in another file
 module.exports = new LoginController();
