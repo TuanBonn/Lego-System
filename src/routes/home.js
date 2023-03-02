@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const HomeController = require('../app/controllers/HomeController');
+const UserDetailController = require('../app/controllers/UserDetailController');
 const security = require('../security/authentication');
 
 // newsController.index;
@@ -21,6 +22,17 @@ router.get('/cart/update/:id', HomeController.updateItem);
 
 //delete Cart Item
 router.get('/cart/delete/:id', HomeController.deleteItem);
+
+
+router.get('/detail',security.auth, UserDetailController.detail);
+
+router.get('/logout',UserDetailController.logout)
+
+router.get('/changePassword', UserDetailController.changePassword),
+
+router.post('/changePassword', UserDetailController.changePasswordSave)
+
+
 
 
 
