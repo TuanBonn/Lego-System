@@ -8,6 +8,9 @@ const mongoose = require('mongoose')
 const {convertToObject} = require('../../util/mongoose');
 const {convertToArrayObjects} = require('../../util/mongoose');
 
+const {hashPassword} = require('../../security/hash');
+const {comparePassword} = require('../../security/hash');
+
 const { ObjectId } = require('mongodb');
 
 const { response } = require('express');
@@ -25,7 +28,7 @@ class LoginController {
         User.findOne({account: new ObjectId(req.signedCookies.adminId)}).populate('account').then(user=>{
            User.find({}).then(users=>{
             // console.log({user: convertToObject(user),users});
-            res.render('admin/detail',{user:convertToObject(user),users:convertToArrayObjects(users),admin:true})
+            res.render('admin/detail',{user:convertToObject(user),users:convertToArrayObjects(users)})
            })
         })
         .catch(err=>console.log(err))
@@ -106,6 +109,32 @@ class LoginController {
 
     //search product
 
+
+
+
+
+    // Change Password Admin
+    changePassword(req,res){
+        res.render('admin/changePassword',{admin:true}) ;
+     }
+ 
+     changePasswordSave(req,res){
+         Account.findOne({
+             _id:req.signedCookies.adminId
+         }).then(account=>{
+             const isPassword = comparePassword(req.body.currentPassword,account.password) 
+             if(isPassword){
+                 const newPassword = hashPassword(req.body.newPassword) ;
+                 Account.updateOne({_id:req.signedCookies.adminId},{password:newPassword}).then(
+                     res.render('admin/changePassword',)
+                 )
+             }else{
+                 res.render('admin/changePassword', {
+                     message: 'Password Wrong'
+                 })
+             }
+         })
+     }
 }
 //make object NewsController to use in another file
 module.exports = new LoginController();

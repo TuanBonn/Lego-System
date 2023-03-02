@@ -7,6 +7,7 @@ const security = require('../security/authenticationAdmin');
 
 // newsController.index;
 router.get('/', adminController.detail);
+
 router.get('/logout',UserDetailController.logout);
 
 router.get('/products', adminController.productManager);
@@ -20,6 +21,10 @@ router.get('/updateProduct/:id', adminController.updateProduct);
 router.post('/update', adminController.update);
 
 router.get('/deleteProduct/:id', adminController.deleteProduct);
+
+router.get('/changePassword',adminController.changePassword);
+
+router.post('/changePassword',adminController.changePasswordSave);
 
 
 
