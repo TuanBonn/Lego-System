@@ -12,17 +12,16 @@ router.get('/', HomeController.index);
 router.get('/product/:slug', HomeController.product);
 
 //add to bag
-router.post('/product/addToBag', security.auth, HomeController.addToBag);
+router.post('/product/addToBag', HomeController.addToBag);
 
 //cart
 router.get('/cart', security.auth, HomeController.cart);
 
 //update Cart Item
-router.get('/cart/update/:id', HomeController.updateItem);
+router.post('/cart/update/', security.auth, HomeController.updateItem);
 
 //delete Cart Item
-router.get('/cart/delete/:id', HomeController.deleteItem);
-
+router.post('/cart/delete/', security.auth, HomeController.deleteItem);
 
 router.get('/detail',security.auth, UserDetailController.detail);
 
@@ -37,6 +36,7 @@ router.post('/changePassword', UserDetailController.changePasswordSave)
 
 
 
+router.get('/cart/payment', security.auth, HomeController.payment);
 
 
 
