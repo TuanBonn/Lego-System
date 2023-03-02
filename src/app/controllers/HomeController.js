@@ -4,6 +4,8 @@ const Theme = require('../models/Theme');
 const Account = require('../models/Account');
 const User = require('../models/User');
 const Cart = require('../models/Cart');
+const Order = require('../models/Order');
+const OrderDetail = require('../models/OrderDetails');
 
 
 const {convertToObject} = require('../../util/mongoose');
@@ -115,10 +117,79 @@ class NewsController {
 
 
     payment(req, res){
-        res.render('user/payment');
+        Cart.find({user: req.signedCookies.userId}).populate('product')
+        .then(carts=>{
+            var total = 0;
+            carts.forEach(element => {
+                total = total + element.product.price * element.quantity;
+            });
+            res.render('user/payment', {carts: convertToArrayObjects(carts), total: total});
+        }).catch(err=>console.log(err));
     }
 
-
+    acceptPayment(req, res){
+        var oid = 0;
+        Order.find({}).limit(1).sort({$natural:-1})
+        .then(orders=>{
+            orders.forEach(element=>{
+                console.log(element._id);
+                oid = element.oid+1;
+                console.log(oid);
+                const orderInfor = req.body;
+                const order = new Order();
+                order.customerName = orderInfor.customername;
+                order.address = orderInfor.address;
+                order.paymentmethod = 'Only Payment By Cash';
+                order.phonenumber = orderInfor.phonenumber;
+                order.email = orderInfor.email;
+                order.status = 'Waiting';
+                order.oid = oid;
+                order.user = req.signedCookies.userId;
+                //create Order
+                order.save()
+                .then(()=>{
+                    console.log('Create Order Successfull');
+                })
+                .catch(err=>console.log(err))
+                //get last order _id
+                var lastId = 0;
+                Order.find({}).limit(1).sort({$natural:-1})
+                .then(orders=>{
+                    orders.forEach(element => {
+                        lastId = element._id;
+                        console.log(lastId);
+                    });
+                })
+                .catch(err=>console.log(err));
+                //create OrderDetail
+                Cart.find({}).populate('product').select('product quantity')
+                .then(carts=>{
+                    carts.forEach(element => {
+                        const orderDetail = new OrderDetail();
+                        orderDetail.order = lastId;
+                        orderDetail.product = element.product._id;
+                        orderDetail.quantity = element.quantity;
+                        console.log(orderDetail);
+                        orderDetail.save()
+                        .then(console.log('OrderDetail Created Successfully'))
+                        .catch(err=>console.log(err));
+                    });
+                }).then(
+                    ()=>{
+                        Cart.deleteMany({})
+                        .then(()=>{
+                            console.log('All Item In Cart is DELETED SUCCESSFULLY')
+                            res.redirect('/');    
+                        })
+                        .catch(err=>console.log(err))
+                    }
+                )
+                .catch(err=>console.log(err));
+            })
+        })
+        .catch(err=>console.log(err));
+        //Delete All Item In cart
+    }
 
 
 

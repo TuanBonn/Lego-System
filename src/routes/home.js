@@ -31,10 +31,7 @@ router.get('/changePassword', UserDetailController.changePassword),
 
 router.post('/changePassword', UserDetailController.changePasswordSave)
 
-
-
-
-
+router.post('/cart/payment/acceptPayment', HomeController.acceptPayment);
 
 router.get('/cart/payment', security.auth, HomeController.payment);
 

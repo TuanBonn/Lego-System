@@ -9,7 +9,7 @@ const Order = new Schema({
     paymentmethod: {type: String},
     status: {type: String},
     oid: {type: Number},
-    userid:{
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
