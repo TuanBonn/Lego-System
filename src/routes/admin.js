@@ -26,6 +26,7 @@ router.get('/changePassword',adminController.changePassword);
 
 router.post('/changePassword',adminController.changePasswordSave);
 
+router.get('/products/search', adminController.searchProduct);
 
 
 
