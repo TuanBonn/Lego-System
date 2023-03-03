@@ -5,7 +5,7 @@
             <div class="my-bag">
             {{#each carts}}
                 <div class="my-bag-list">
-                        <form action="" method="GET" id="{{@index}}">
+                        <form action="" method="POST" id="{{@index}}">
                             <div class="my-bag-item">
                                 <div class="my-bag-item-img">
                                     <img src="/img/products/{{this.product.img1}}" alt="" class="s">
@@ -14,6 +14,7 @@
                                     <a href="/product/{{this.product.slug}}" class="my-bag-item-product-name">{{this.product.name}}</a>
                                     <span class="my-bag-item-product-price">${{this.product.price}}</span>
                                     <input type="hidden" name="_id" value="{{this._id}}" id="id_{{@index}}">
+                                    <input type="hidden" name="product" value="{{this.product._id}}">
                                     <input type="number" name="quantity" value="{{this.quantity}}">
                                 </div>
                                 <div class="my-bag-menu">
@@ -79,17 +80,20 @@
 </div>
 <script>
     function deleteItem(index) {
-        var productid = document.getElementById("id_"+index).value;
-        document.getElementById(index).action = '/cart/delete/'+productid;
-        var x = document.getElementById(index).action;
-        
-        console.log(x);
-        document.getElementById(index).submit();
+        var result = confirm("Do you want to delete?");
+        if(result == true){
+            var productid = document.getElementById("id_"+index).value;
+            document.getElementById(index).action = '/cart/delete/';
+            var x = document.getElementById(index).action;
+            
+            console.log(x);
+            document.getElementById(index).submit();
+        }
     }
 
     function updateItem(index){
         var productid = document.getElementById("id_"+index).value;//get id of cart-item where the index of form has been placed
-        document.getElementById(index).action = '/cart/update/'+productid;//set up action for form with index that is taken
+        document.getElementById(index).action = '/cart/update/';//set up action for form with index that is taken
         var x = document.getElementById(index).action;
     
         console.log(x);

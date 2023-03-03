@@ -1,0 +1,34 @@
+.product-item{
+    width: 22%;
+    margin: 15px 15px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+}
+.wating-background{
+    background-color: rgb(230, 230, 230);
+}
+.delivery-background{
+    background-color: rgb(155, 192, 255);
+}
+.confirmed-background{
+    background-color: rgb(94, 253, 174);
+}
+.canceled-background{
+    background-color: rgb(253, 94, 94);
+}
+.count{
+    font-weight: 600;
+    font-size: 20px;
+}
+.second-part,
+.first-part{
+    width: 50%;
+    margin: auto;
+}
+.second-part>img{
+    object-fit: contain;
+    width: 100%;
+    opacity: 0.4;
+    border-radius: 20px;
+}

@@ -71,7 +71,8 @@ text-decoration: none;
     text-align: center;
     text-decoration: none;
     color: black;
-    margin-bottom: 15px
+    margin-bottom: 15px;
+    display: block;
 }
 .update-btn{
     background-color: rgb(120, 212, 92);
