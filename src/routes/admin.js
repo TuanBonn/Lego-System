@@ -7,6 +7,9 @@ const security = require('../security/authenticationAdmin');
 
 // newsController.index;
 
+router.get('/ ',security.auth, adminController.index);
+
+
 router.get('/',security.auth, adminController.index);
 router.get("/theme", security.auth, adminController.goTheme);
 router.get("/theme/update/:id", security.auth, adminController.goThemeUpdate);
@@ -38,6 +41,7 @@ router.get('/changePassword',adminController.changePassword);
 router.post('/changePassword',adminController.changePasswordSave);
 
 router.get('/products/search', adminController.searchProduct);
+
 
 
 

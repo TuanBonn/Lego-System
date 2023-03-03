@@ -5,6 +5,7 @@ const HomeController = require('../app/controllers/HomeController');
 const UserDetailController = require('../app/controllers/UserDetailController');
 const security = require('../security/authentication');
 
+
 // newsController.index;
 router.get('/', HomeController.index);
 
@@ -40,6 +41,9 @@ router.get('/editInfor',UserDetailController.editIn4);
 router.post('/editInfor',UserDetailController.editIn4Save);
 
 router.get('/orderDetail',HomeController.orderDetail);
+
+
+
 
 
 
