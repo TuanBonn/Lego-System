@@ -95,7 +95,7 @@ class LoginController {
         })
     }
     update(req, res, next) {
-        console.log('demo',req.body);
+        //console.log('demo',req.body);
         product.findByIdAndUpdate(req.body.id, req.body, (error, data) =>{
             res.redirect('/admin/products');
         })
@@ -109,7 +109,23 @@ class LoginController {
     }
 
     //search product
-
+    searchProduct(req, res, next) {
+        //
+        // var name = req.query.name;
+        // var data = posts.filter(function(item){
+        //     return Product.name === parseInt(name)
+        // });
+        // res.render('admin/search', {admin:true, Product: convertToArrayObjects(data)});
+            
+            
+        //     //(error, data)=>{
+        //     //console.log('danh sach product', data);
+        product.find({}, (error, data)=>{
+                console.log(data);
+        res.render('admin/products', {admin:true, Product: convertToArrayObjects(data)});
+        // //});
+        });
+    }
 
 
 
