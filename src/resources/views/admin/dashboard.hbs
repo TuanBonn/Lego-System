@@ -1,50 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/css/dashboard.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
+<div class="container">
+    <div class="dashboard">
+        <div class="recommend">
+            <span class="rcmd-header">Welcome to LEGO Dashboard</span>
+            <div class="wrap-list-product-recommended grid_row">
 
+                <div class="product-item wating-background">
+                    <div class="first-part">
+                        <span class="count">{{waiting}}</span>
+                        <h5 class="type-count-header">Waiting</h5>
+                    </div>
+                    <div class="second-part">
+                        <img src="/img/dashboard/waiting.jpg" alt="" srcset="">
+                    </div>
+                </div>
 
+                <div class="product-item delivery-background">
+                    <div class="first-part">
+                        <span class="count">{{delivery}}</span>
+                        <h5 class="type-count-header">Delivery</h5>
+                    </div>
+                    <div class="second-part">
+                        <img src="/img/dashboard/delivery.jpg" alt="" srcset="">
+                    </div>
+                </div>
 
-    <form action="/admin/products/search" method="GET">
-      <input type="text" name="name" placeholder="Search">
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
-    {{!-- <form(action="/search", method="GET")>
-    <input(name="id", type="text", placeholder="id")>
-    <button type="submit"> Search</button>
-    </form> --}}
+                <div class="product-item confirmed-background">
+                    <div class="first-part">
+                        <span class="count">{{confirmed}}</span>
+                        <h5 class="type-count-header">Completed</h5>
+                    </div>
+                    <div class="second-part">
+                        <img src="/img/dashboard/confirmed.jpg" alt="" srcset="">
+                    </div>
+                </div>
 
+                <div class="product-item canceled-background">
+                    <div class="first-part">
+                        <span class="count">{{canceled}}</span>
+                        <h5 class="type-count-header">Canceled</h5>
+                    </div>
+                    <div class="second-part">
+                        <img src="/img/dashboard/canceled.jpg" alt="" srcset="">
+                    </div>
+                </div>
 
-     <h1 style="text-align:center">PRODUCTS LIST</h1>
-     <a href="/admin/addProduct" class="btn btn-primary">Add product</a>
-     <table class="table">
-        <thead>
-        <tr>
-            <th>name</th>
-            <th>price</th>
-            <th>quantity</th>
-            <th>rating</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-    <tbody>
-    {{#each products}}  
-    <tr>    
-    <td>{{this.name}}</td>
-    <td>{{this.price}} $ </td>
-    <td>{{this.quantity}}</td>
-    <td>{{this.ratting}}</td>
-    <td><a href="/admin/updateProduct/{{this._id}}" class="btn btn-info">Edit</a> <a href="/admin/deleteProduct/{{this._id}}" class="btn btn-warning">Delete</a> </td>
-    </tr>
-    {{/each}}
-    </tbody>
-    </table>
-
+            </div>
+        </div>
+        <div class="big-chart">
+        <div class="wrap-the-lastest grid_row">
+            <div class="lastest-item">
+                <div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
+            </div>
+            <div class="lastest-item">
+                <div id="circle" style="width:100%; max-width:600px; height:500px;"></div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
 <div class="wrap-footer">
     <footer class=" text-lg-start">
     <!-- Grid container -->
@@ -243,6 +267,52 @@
 
     </footer>
 </div>
+<script>
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+var data = google.visualization.arrayToDataTable([
+  ['Contry', 'Mhl'],
+  ['Italy',55],
+  ['France',49],
+  ['Spain',44],
+  ['USA',24],
+  ['Argentina',15]
+]);
+
+var options = {
+  title:'World Wide LEGO Production'
+};
+
+var chart = new google.visualization.BarChart(document.getElementById('myChart'));
+  chart.draw(data, options);
+}
+
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(circle);
+
+function circle() {
+var data = google.visualization.arrayToDataTable([
+  ['Contry', 'Mhl'],
+  ['Italy',54.8],
+  ['France',48.6],
+  ['Spain',44.4],
+  ['USA',23.9],
+  ['Argentina',14.5]
+]);
+
+var options = {
+  title:'World Wide Theme Production',
+  is3D:true
+};
+
+var chart = new google.visualization.PieChart(document.getElementById('circle'));
+  chart.draw(data, options);
+}
+</script>
+
 
 </body>
 </html>

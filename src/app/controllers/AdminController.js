@@ -3,6 +3,7 @@ const User = require('../models/User');
 const express = require('express');
 const router = express.Router();
 const product = require('../models/Product');
+const Order = require('../models/Order')
 const mongoose = require('mongoose')
 
 const {convertToObject} = require('../../util/mongoose');
@@ -94,7 +95,7 @@ class LoginController {
         })
     }
     update(req, res, next) {
-        console.log('demo',req.body);
+        //console.log('demo',req.body);
         product.findByIdAndUpdate(req.body.id, req.body, (error, data) =>{
             res.redirect('/admin/products');
         })
@@ -108,7 +109,23 @@ class LoginController {
     }
 
     //search product
-
+    searchProduct(req, res, next) {
+        //
+        // var name = req.query.name;
+        // var data = posts.filter(function(item){
+        //     return Product.name === parseInt(name)
+        // });
+        // res.render('admin/search', {admin:true, Product: convertToArrayObjects(data)});
+            
+            
+        //     //(error, data)=>{
+        //     //console.log('danh sach product', data);
+        product.find({}, (error, data)=>{
+                console.log(data);
+        res.render('admin/products', {admin:true, Product: convertToArrayObjects(data)});
+        // //});
+        });
+    }
 
 
 
@@ -134,6 +151,31 @@ class LoginController {
                  })
              }
          })
+     }
+
+     dashboard(req, res){
+        Order.find({})
+        .then(orders=>{
+            var waiting = 0;
+            var confirmed = 0;
+            var delivery = 0;
+            var canceled = 0;
+
+            orders.forEach(element => {
+                if(element.status == "Waiting"){
+                    waiting = waiting + 1;
+                }else if(element.status == "Delivery"){
+                    delivery = delivery + 1;
+                }else if(element.status = "Confirmed"){
+                    confirmed = confirmed + 1;
+                }else if(element.status == "Canceled"){
+                    canceled = canceled + 1;
+                }
+            });
+
+            res.render('admin/dashboard', {admin: true, waiting: waiting, confirmed: confirmed, delivery: delivery, canceled: canceled});
+        })
+        
      }
 }
 

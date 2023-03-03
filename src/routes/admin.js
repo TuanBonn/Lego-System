@@ -6,6 +6,8 @@ const UserDetailController = require('../app/controllers/UserDetailController');
 const security = require('../security/authenticationAdmin');
 
 // newsController.index;
+router.get('/dashboard', adminController.dashboard);
+
 router.get('/', adminController.detail);
 
 router.get('/logout',UserDetailController.logout);
@@ -26,6 +28,7 @@ router.get('/changePassword',adminController.changePassword);
 
 router.post('/changePassword',adminController.changePasswordSave);
 
+router.get('/products/search', adminController.searchProduct);
 
 
 
