@@ -6,9 +6,9 @@ const UserDetailController = require('../app/controllers/UserDetailController');
 const security = require('../security/authenticationAdmin');
 
 // newsController.index;
-<<<<<<< HEAD
+
 router.get('/ ',security.auth, adminController.index);
-=======
+
 
 router.get('/',security.auth, adminController.index);
 router.get("/theme", security.auth, adminController.goTheme);
@@ -44,6 +44,6 @@ router.get('/products/search', adminController.searchProduct);
 
 
 
->>>>>>> 62d3c7ca751099da4a951d9b82ab02cbd47f9e3f
+
 
 module.exports = router;
