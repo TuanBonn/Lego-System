@@ -4,6 +4,8 @@ const Theme = require('../models/Theme');
 const Account = require('../models/Account');
 const User = require('../models/User');
 const Cart = require('../models/Cart');
+const Order = require('../models/Order');
+const OrderDetail = require('../models/OrderDetails');
 
 
 const {convertToObject} = require('../../util/mongoose');
@@ -11,6 +13,7 @@ const {convertToArrayObjects} = require('../../util/mongoose');
 
 const {hashPassword} = require('../../security/hash');
 const {comparePassword} = require('../../security/hash');
+const OrderDetails = require('../models/OrderDetails');
 
 var url = 'mongodb://127.0.0.1:27017';
 var MongoClient = require('mongodb').MongoClient;
@@ -68,11 +71,10 @@ class NewsController {
                         res.redirect('/product/'+form.slug);
                     }else if(form.quantity<1){
                         res.redirect('/product/'+form.slug);
-                    }else{
+                    }
                         newCartItem.save()
                         .then(()=>res.redirect('/product/'+form.slug))
                         .catch(err=>console.log(err));
-                    }
                 }
             })
         }
@@ -91,17 +93,104 @@ class NewsController {
     }
 
     updateItem(req, res){
-        res.send('updated')
+        const form = req.body;
+        Product.findOne({_id: form.product})
+        .then(product=>{
+            if(product.quantity<form.quantity){
+                res.redirect('/cart');
+            }else if(form.quantity<0){
+                res.redirect('/cart');
+            }
+            else{
+                Cart.updateOne({_id: form._id}, {quantity: form.quantity})
+                .then(res.redirect('/cart'))
+                .catch(err=>console.log(err));
+            }
+        })
     }
 
     deleteItem(req, res){
-        res.send('deleted');
+        const form = req.body;
+        Cart.deleteOne({_id: form._id})
+        .then(res.redirect('/cart'))
+        .catch(err=>console.log(err));
     }
 
 
+    payment(req, res){
+        Cart.find({user: req.signedCookies.userId}).populate('product')
+        .then(carts=>{
+            var total = 0;
+            carts.forEach(element => {
+                total = total + element.product.price * element.quantity;
+            });
+            res.render('user/payment', {carts: convertToArrayObjects(carts), total: total});
+        }).catch(err=>console.log(err));
+    }
 
-
-
+    acceptPayment(req, res){
+        var oid = 0;
+        Order.find({}).limit(1).sort({$natural:-1})
+        .then(orders=>{
+            orders.forEach(element=>{
+                console.log(element._id);
+                oid = element.oid+1;
+                console.log(oid);
+                const orderInfor = req.body;
+                const order = new Order();
+                order.customerName = orderInfor.customername;
+                order.address = orderInfor.address;
+                order.paymentmethod = 'Only Payment By Cash';
+                order.phonenumber = orderInfor.phonenumber;
+                order.email = orderInfor.email;
+                order.status = 'Waiting';
+                order.oid = oid;
+                order.user = req.signedCookies.userId;
+                //create Order
+                order.save()
+                .then(()=>{
+                    console.log('Create Order Successfull');
+                })
+                .catch(err=>console.log(err))
+                //get last order _id
+                var lastId = 0;
+                Order.find({}).limit(1).sort({$natural:-1})
+                .then(orders=>{
+                    orders.forEach(element => {
+                        lastId = element._id;
+                        console.log(lastId);
+                    });
+                })
+                .catch(err=>console.log(err));
+                //create OrderDetail
+                Cart.find({}).populate('product').select('product quantity')
+                .then(carts=>{
+                    carts.forEach(element => {
+                        const orderDetail = new OrderDetail();
+                        orderDetail.order = lastId;
+                        orderDetail.product = element.product._id;
+                        orderDetail.quantity = element.quantity;
+                        console.log(orderDetail);
+                        orderDetail.save()
+                        .then(console.log('OrderDetail Created Successfully'))
+                        .catch(err=>console.log(err));
+                    });
+                }).then(
+                    ()=>{
+                        Cart.deleteMany({})
+                        .then(()=>{
+                            console.log('All Item In Cart is DELETED SUCCESSFULLY')
+                            res.redirect('/');    
+                        })
+                        .catch(err=>console.log(err))
+                    }
+                )
+                .catch(err=>console.log(err));
+            })
+        })
+        .catch(err=>console.log(err));
+        //Delete All Item In cart
+    }
 
 
 
@@ -174,19 +263,18 @@ class NewsController {
 
     insert(req, res, next){
         const prod = new Product();
-        prod.name = "Lego";
+        prod.name = "2 Fast 2 Furious Nissan";
         prod.age = 2;
-        prod.price = 120000;
+        prod.price = 24;
         prod.quantity = 30;
-        prod.slug = "Lego";
         prod.img1 = "1";
         prod.img2 = "2";
         prod.img3 = "3";
         prod.description = "hahaha";
         prod.status = "EXIST";
-        prod.ratting = 3;
-        prod.theme = "63f78061c3fda0dcf591d857";
-        prod.category = "63f77f0cc3fda0dcf591d855"
+        prod.ratting = 5;
+        prod.theme = "63fd71c0bcd449ebcef1001d";
+        prod.category = "63fd761dc94a88b6ef9be5c2"
         prod.save().then(()=>{
             console.log('Insert Success');
             res.redirect('/');
@@ -225,6 +313,26 @@ class NewsController {
         res.send('HI');
         console.log(req.cookies);
     }
+
+
+    orderDetail(req,res){
+        OrderDetails.find({user: req.signedCookies.userId}).populate('product')
+        .populate('order').then(orderdetails=>{
+            var total = 0;
+            orderdetails.forEach(
+                element=>{
+                    total + element.product.price * element.quantity;
+                } )
+                res.render('user/orderDetail',{orderdetails: convertToArrayObjects(orderdetails),total:total});
+        }).catch(err=>console.log(err))
+      
+    }
+
+
+
 }
+
+
+   
 //make object NewsController to use in another file
 module.exports = new NewsController();
