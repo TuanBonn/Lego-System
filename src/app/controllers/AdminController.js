@@ -3,6 +3,7 @@ const User = require('../models/User');
 const express = require('express');
 const router = express.Router();
 const product = require('../models/Product');
+const Order = require('../models/Order')
 const mongoose = require('mongoose')
 
 const {convertToObject} = require('../../util/mongoose');
@@ -134,6 +135,31 @@ class LoginController {
                  })
              }
          })
+     }
+
+     dashboard(req, res){
+        Order.find({})
+        .then(orders=>{
+            var waiting = 0;
+            var confirmed = 0;
+            var delivery = 0;
+            var canceled = 0;
+
+            orders.forEach(element => {
+                if(element.status == "Waiting"){
+                    waiting = waiting + 1;
+                }else if(element.status == "Delivery"){
+                    delivery = delivery + 1;
+                }else if(element.status = "Confirmed"){
+                    confirmed = confirmed + 1;
+                }else if(element.status == "Canceled"){
+                    canceled = canceled + 1;
+                }
+            });
+
+            res.render('admin/dashboard', {admin: true, waiting: waiting, confirmed: confirmed, delivery: delivery, canceled: canceled});
+        })
+        
      }
 }
 //make object NewsController to use in another file
