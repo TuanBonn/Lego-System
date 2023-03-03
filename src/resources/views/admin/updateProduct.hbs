@@ -1,16 +1,28 @@
-<div class="container col-md-6 text-center mt-3 card p-2 bg-warning">
-<h1 style="color:red;">update product</h1>
-
+<div style = "position:fixed; left:300px; top:110px" >
+    <div class="panel-heading">
+        <h1 style="color:orangered">Edit Product</h1>
+    </div>
 <form action="/admin/update" method="POST">
-    ID: <input type="text" name="id" value="{{Product._id}}"><br>
-    Name: <input type="text" name="name" value="{{Product.name}}"><br>
-    Age: <input type="number" name="age" value="{{Product.age}}"><br>
-    Price: <input type="number" name="price" value="{{Product.price}}"><br>
-    Quantity: <input type="number" name="quantity" value="{{Product.quantity}}"><br>
-    Description: <input type="text" name="description" value="{{Product.description}}"><br>
-    rating: <input type="text" name="ratting" value="{{Product.ratting}}"><br>
-<button type="submit">Update product</button>
+<div class="mb-3">
+  <label for="name" class="form-label">Product name</label>
+  <input type="text" style="width: 700px" class="form-control" name="name" value="{{Product.name}}">
 
-</form>
-<h2><a href="/admin/products" class="btn btn-info">Go to Product Management Page</a></h2>
+    <label for="age" class="form-label">Age</label>
+    <input type="number" style="width: 700px" class="form-control" name="age" value="{{Product.age}}">
+
+    <label for="price" class="form-label">Price</label>
+    <input type="number" style="width: 700px" class="form-control" name="price" value="{{Product.price}}">
+
+    <label for="quantity" class="form-label">Quantity</label>
+    <input type="number" style="width: 700px" class="form-control"  name="quantity" value="{{Product.quantity}}">
+
+    <label for="description" class="form-label">Description</label>
+    <input type="text" style="width: 700px" class="form-control" name="description" value="{{Product.description}}">
+
+    <label for="rating" class="form-label">Rating</label>
+    <input type="number" style="width: 700px" class="form-control" name="ratting" value="{{Product.ratting}}">
 </div>
+    <input type="submit" style="width: 100px" class="btn btn-warning">
+    <h2><a href="/admin/products" class="btn btn-info">Go back to Product Management Page</a></h2>
+</form>
+  </div>

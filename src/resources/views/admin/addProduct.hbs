@@ -1,15 +1,29 @@
 
-<div class="container col-md-6 text-center mt-3 card p-2 bg-warning">
-<h1 style="color:red;">add product</h1>
+<div style = "position:fixed; left:300px; top:110px" >
+    <div class="panel-heading">
+        <h1 style="color:orangered">Add Product</h1>
+    </div>
 <form action="/admin/add" method="POST">
-Name: <input type="text" name="name"><br>
-Age:   <input type="number" name="age"><br>
-Price: <input type="number" name="price"><br>
-Quantity: <input type="number" name="quantity"><br>
-Description: <input type="text" name="description"><br>
-rating: <input type="text" name="ratting"><br>
-<button type="submit">Add product</button>
+<div class="mb-3">
+  <label for="name" class="form-label">Product name</label>
+  <input type="text" style="width: 700px" class="form-control" name="name" >
 
-<h2><a href="/admin/products" class="btn btn-info">Go to Product Management Page</a></h2>
-</form>
+    <label for="age" class="form-label">Age</label>
+    <input type="number" style="width: 700px" class="form-control" name="age">
+
+    <label for="price" class="form-label">Price</label>
+    <input type="number" style="width: 700px" class="form-control" name="price">
+
+    <label for="quantity" class="form-label">Quantity</label>
+    <input type="number" style="width: 700px" class="form-control"  name="quantity">
+
+    <label for="description" class="form-label">Description</label>
+    <input type="text" style="width: 700px" class="form-control" name="description">
+
+    <label for="rating" class="form-label">Rating</label>
+    <input type="number" style="width: 700px" class="form-control" name="ratting">
 </div>
+    <input type="submit" style="width: 100px" class="btn btn-warning">
+    <h2><a href="/admin/products" class="btn btn-info">Go back to Product Management Page</a></h2>
+</form>
+  </div>
