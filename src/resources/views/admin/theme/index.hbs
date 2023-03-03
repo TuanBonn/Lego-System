@@ -1,10 +1,10 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
 <div class="header">
@@ -48,21 +48,40 @@
         </nav>
     </div>
 </div>
-
-
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
-=======
->>>>>>> 1248fc0b364a7bd84f3bef9f95c68f154a1ace90
-    <h1>THIS IS HOME ADMIN PAGE</h1>
-        <h2><a href="/admin/products" class="btn btn-warning">Go to Product Management Page</a></h2>
-        <h2><a href="#" class="btn btn-warning">Go to Order Management Page</a></h2>
-
-
-
->>>>>>> 1d4286d88f75c5516dd54c7bfd5a9966739da3a0
+<!-- Content main -->
+<div>
+    <div>
+        <a class="btn btn-primary" href="/admin/theme/add" role="button">Add</a>
+        
+    </div>
+    <div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Img</th>
+    </tr>
+  </thead>
+  <tbody>
+                {{#each themes as |theme|}}
+               
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{description}}</td>
+                    <td><a href=""><img src="/img/theme/{{img}}" alt="" srcset=""></td>
+                    <td>
+                        <a class="btn btn-primary" href="/admin/theme/update/{{_id}}" role="button">Update</a>
+                        <a class="btn btn-primary" href="/admin/theme/delete/{{_id}}" role="button">Delete</a>
+                    </td>
+                </tr>
+                {{/each}}
+  </tbody>
+</table>
+        
+    </div>
+</div>
+<!-- * Content main -->
 <div class="wrap-footer">
     <footer class=" text-lg-start">
     <!-- Grid container -->

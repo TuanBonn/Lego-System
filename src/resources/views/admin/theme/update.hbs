@@ -1,10 +1,10 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
 <div class="header">
@@ -48,21 +48,32 @@
         </nav>
     </div>
 </div>
-
-
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
-=======
->>>>>>> 1248fc0b364a7bd84f3bef9f95c68f154a1ace90
-    <h1>THIS IS HOME ADMIN PAGE</h1>
-        <h2><a href="/admin/products" class="btn btn-warning">Go to Product Management Page</a></h2>
-        <h2><a href="#" class="btn btn-warning">Go to Order Management Page</a></h2>
-
-
-
->>>>>>> 1d4286d88f75c5516dd54c7bfd5a9966739da3a0
+<!-- Content main -->
+<div>
+    <form method="POST">
+    <table>
+        <tr>
+            <td>Ten</td>
+            <td><input type="text" name="name" value="{{theme.name}}"></td>
+        </tr>
+        <tr>
+            <td>Mo ta</td>
+            <td><input type="text" name="description" value="{{theme.description}}"></td>
+        </tr>
+        <tr>
+            <td>Anh</td>
+            <td><input type="file" name="img" value="{{theme.img}}"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Cap nhat</button>
+                <button type="button" onclick="history.back()">Huy</button>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+<!-- * Content main -->
 <div class="wrap-footer">
     <footer class=" text-lg-start">
     <!-- Grid container -->

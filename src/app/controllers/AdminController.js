@@ -1,10 +1,14 @@
 const Account = require('../models/Account');
 const User = require('../models/User');
+
+const Theme = require('../models/Theme');
+
 const express = require('express');
 const router = express.Router();
 const product = require('../models/Product');
 const Order = require('../models/Order')
 const mongoose = require('mongoose')
+
 
 const {convertToObject} = require('../../util/mongoose');
 const {convertToArrayObjects} = require('../../util/mongoose');
@@ -22,9 +26,7 @@ var url = 'mongodb://127.0.0.1:27017';
 var MongoClient = require('mongodb').MongoClient;
 
 
-
-class LoginController {
-    
+class AdminController {
     detail(req, res) {
         User.findOne({account: new ObjectId(req.signedCookies.adminId)}).populate('account').then(user=>{
            User.find({}).then(users=>{
@@ -36,6 +38,7 @@ class LoginController {
     }
 
   
+
 
     //[GET] /news
     index(req, res) {
@@ -67,6 +70,44 @@ class LoginController {
         //     Products : Products.map(Produc   ts => Products.toObject())
         // }))
     }
+
+    async goTheme(req, res){
+        const themes = await Theme.find();
+        res.render("admin/theme/index", {admin: true, themes: convertToArrayObjects(themes)})
+    }
+    async goThemeUpdate(req, res){
+        const theme = await Theme.findById(req.params.id);
+        const themes = await Theme.findById();
+        res.render("admin/theme/update", {admin: true, theme: convertToObject(theme)})
+    }
+    async doThemeUpdate(req, res){
+        var theme = new Theme({
+            _id: req.params.id,
+            name: req.body.name,
+            description: req.body.description,
+            img: req.body.img
+        })
+        var upsetData = theme.toObject()
+        delete upsetData._id
+        await Theme.update({_id: req.params.id}, upsetData, {upsert: true})
+        res.redirect("/admin/theme")
+    }
+    async goThemeAdd(req, res){
+        res.render("admin/theme/add", {admin: true})
+    }
+    async doThemeAdd(req, res){
+        const theme = new Theme()
+        theme.name = req.body.name
+        theme.description = req.body.description
+        theme.img = req.body.img
+        await theme.save()
+        res.redirect("/admin/theme")
+    }
+    async doThemeDelete(req, res){
+        await Theme.remove({_id: req.params.id})
+        res.redirect("/admin/theme")
+    }
+
 
     //add product
     addProduct(req, res, next) {
@@ -177,9 +218,10 @@ class LoginController {
         })
         
      }
+
 }
 
     
 
 //make object NewsController to use in another file
-module.exports = new LoginController();
+module.exports = new AdminController();
