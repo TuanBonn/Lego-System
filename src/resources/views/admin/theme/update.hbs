@@ -48,10 +48,32 @@
         </nav>
     </div>
 </div>
-
-
-    <h1>THIS IS HOME ADMIN PAGE</h1>
-
+<!-- Content main -->
+<div>
+    <form method="POST">
+    <table>
+        <tr>
+            <td>Ten</td>
+            <td><input type="text" name="name" value="{{theme.name}}"></td>
+        </tr>
+        <tr>
+            <td>Mo ta</td>
+            <td><input type="text" name="description" value="{{theme.description}}"></td>
+        </tr>
+        <tr>
+            <td>Anh</td>
+            <td><input type="file" name="img" value="{{theme.img}}"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Cap nhat</button>
+                <button type="button" onclick="history.back()">Huy</button>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+<!-- * Content main -->
 <div class="wrap-footer">
     <footer class=" text-lg-start">
     <!-- Grid container -->

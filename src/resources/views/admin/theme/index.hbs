@@ -48,10 +48,40 @@
         </nav>
     </div>
 </div>
-
-
-    <h1>THIS IS HOME ADMIN PAGE</h1>
-
+<!-- Content main -->
+<div>
+    <div>
+        <a class="btn btn-primary" href="/admin/theme/add" role="button">Add</a>
+        
+    </div>
+    <div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Img</th>
+    </tr>
+  </thead>
+  <tbody>
+                {{#each themes as |theme|}}
+               
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{description}}</td>
+                    <td><a href=""><img src="/img/theme/{{img}}" alt="" srcset=""></td>
+                    <td>
+                        <a class="btn btn-primary" href="/admin/theme/update/{{_id}}" role="button">Update</a>
+                        <a class="btn btn-primary" href="/admin/theme/delete/{{_id}}" role="button">Delete</a>
+                    </td>
+                </tr>
+                {{/each}}
+  </tbody>
+</table>
+        
+    </div>
+</div>
+<!-- * Content main -->
 <div class="wrap-footer">
     <footer class=" text-lg-start">
     <!-- Grid container -->
