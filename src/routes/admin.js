@@ -5,7 +5,6 @@ const adminController = require('../app/controllers/AdminController');
 const security = require('../security/authenticationAdmin');
 
 // newsController.index;
-router.get('/',security.auth, adminController.index);
-
+router.get('/ ',security.auth, adminController.index);
 
 module.exports = router;

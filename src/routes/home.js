@@ -4,6 +4,7 @@ const router = express.Router();
 const HomeController = require('../app/controllers/HomeController');
 const security = require('../security/authentication');
 
+
 // newsController.index;
 router.get('/', HomeController.index);
 
@@ -21,6 +22,9 @@ router.get('/cart/update/:id', HomeController.updateItem);
 
 //delete Cart Item
 router.get('/cart/delete/:id', HomeController.deleteItem);
+
+
+
 
 
 
