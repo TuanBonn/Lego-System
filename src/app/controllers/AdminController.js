@@ -1,14 +1,14 @@
 const Account = require('../models/Account');
 const User = require('../models/User');
-<<<<<<< HEAD
+
 const Theme = require('../models/Theme');
-=======
+
 const express = require('express');
 const router = express.Router();
 const product = require('../models/Product');
 const Order = require('../models/Order')
 const mongoose = require('mongoose')
->>>>>>> 1248fc0b364a7bd84f3bef9f95c68f154a1ace90
+
 
 const {convertToObject} = require('../../util/mongoose');
 const {convertToArrayObjects} = require('../../util/mongoose');
@@ -25,13 +25,8 @@ const Product = require('../models/Product');
 var url = 'mongodb://127.0.0.1:27017';
 var MongoClient = require('mongodb').MongoClient;
 
-<<<<<<< HEAD
+
 class AdminController {
-=======
-
-
-class LoginController {
-    
     detail(req, res) {
         User.findOne({account: new ObjectId(req.signedCookies.adminId)}).populate('account').then(user=>{
            User.find({}).then(users=>{
@@ -44,7 +39,7 @@ class LoginController {
 
   
 
->>>>>>> 1248fc0b364a7bd84f3bef9f95c68f154a1ace90
+
     //[GET] /news
     index(req, res) {
         res.render('admin/homeAdmin', {admin: true});
@@ -75,7 +70,7 @@ class LoginController {
         //     Products : Products.map(Produc   ts => Products.toObject())
         // }))
     }
-<<<<<<< HEAD
+
     async goTheme(req, res){
         const themes = await Theme.find();
         res.render("admin/theme/index", {admin: true, themes: convertToArrayObjects(themes)})
@@ -112,7 +107,7 @@ class LoginController {
         await Theme.remove({_id: req.params.id})
         res.redirect("/admin/theme")
     }
-=======
+
 
     //add product
     addProduct(req, res, next) {
@@ -223,7 +218,7 @@ class LoginController {
         })
         
      }
->>>>>>> 1248fc0b364a7bd84f3bef9f95c68f154a1ace90
+
 }
 
     
