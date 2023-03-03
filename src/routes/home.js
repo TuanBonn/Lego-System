@@ -35,6 +35,12 @@ router.post('/cart/payment/acceptPayment', HomeController.acceptPayment);
 
 router.get('/cart/payment', security.auth, HomeController.payment);
 
+router.get('/editInfor',UserDetailController.editIn4);
+
+router.post('/editInfor',UserDetailController.editIn4Save);
+
+router.get('/orderDetail',HomeController.orderDetail);
+
 
 
 

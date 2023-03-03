@@ -6,6 +6,7 @@ const {convertToArrayObjects} = require('../../util/mongoose');
 const {hashPassword} = require('../../security/hash');
 const {comparePassword} = require('../../security/hash');
 const { ObjectId } = require('mongodb');
+const Product = require('../models/Product');
 var url = 'mongodb://127.0.0.1:27017';
 var MongoClient = require('mongodb').MongoClient;
 
@@ -14,7 +15,7 @@ class UserDetailController {
     detail(req, res) {
         User.findOne({account: new ObjectId(req.signedCookies.userId)}).populate('account').then(user=>{
            User.find({}).then(users=>{
-            console.log({user: convertToObject(user),users});
+            // console.log({user: convertToObject(user),users});
             res.render('user/detail',{user:convertToObject(user),users:convertToArrayObjects(users)})
            })
         })
@@ -50,6 +51,32 @@ class UserDetailController {
             }
         })
     }
+
+    editIn4(req,res){
+        User.findOne({account :new ObjectId(req.signedCookies.userId)}).populate('account')
+        .then(user=>{
+            User.find({}).then(
+                res.render('user/editInformation',{user:convertToObject(user)})
+            )
+        })
+               
+    }
+
+    editIn4Save(req,res){
+        const form = req.body
+        const userID = {account :new ObjectId(req.signedCookies.userId)};
+        
+        User.findOne(userID).populate('account')
+        .then(user =>{
+            console.log(user.name)
+            // console.log(form.name)
+            
+            User.updateOne({account: userID},{name: form.name})
+            .then(res.redirect('/detail'))
+        })
+
+    }
+
 }
 //make object NewsController to use in another file
 module.exports = new UserDetailController();

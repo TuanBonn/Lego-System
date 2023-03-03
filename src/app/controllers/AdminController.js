@@ -28,7 +28,7 @@ class LoginController {
         User.findOne({account: new ObjectId(req.signedCookies.adminId)}).populate('account').then(user=>{
            User.find({}).then(users=>{
             // console.log({user: convertToObject(user),users});
-            res.render('admin/detail',{user:convertToObject(user),users:convertToArrayObjects(users)})
+            res.render('admin/detail',{admin: true,user:convertToObject(user),users:convertToArrayObjects(users)})
            })
         })
         .catch(err=>console.log(err))
@@ -129,12 +129,15 @@ class LoginController {
                      res.render('admin/changePassword',)
                  )
              }else{
-                 res.render('admin/changePassword', {
+                 res.render('admin/changePassword',{admin:true}, {
                      message: 'Password Wrong'
                  })
              }
          })
      }
 }
+
+    
+
 //make object NewsController to use in another file
 module.exports = new LoginController();
