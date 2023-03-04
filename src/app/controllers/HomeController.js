@@ -14,24 +14,33 @@ const {convertToArrayObjects} = require('../../util/mongoose');
 const {hashPassword} = require('../../security/hash');
 const {comparePassword} = require('../../security/hash');
 const OrderDetails = require('../models/OrderDetails');
+const { ObjectId } = require('mongodb');
 
-var url = 'mongodb://127.0.0.1:27017';
+var url = 'mongodb+srv://lego:lego@cluster0.3no8d6y.mongodb.net/test';
 var MongoClient = require('mongodb').MongoClient;
 
 class NewsController {
     //render all products to homepage with two ways - NQT 27/2/2023
     index(req, res, next) {
-        // async function hi(){
-        //     let client = await MongoClient.connect(url);
-        //     let db = client.db("lego_shopping");
-        //     let products = await db.collection("products").find().toArray();
-        //     res.render('home', {'products': products});
-        // }
-        Product.find({}).populate('category').populate('theme')
-        .then(products=>{
-            res.render('home', {products: convertToArrayObjects(products)})
-        }).catch(next)
-        // hi();
+        async function hi(){
+            let client = await MongoClient.connect(url);
+            let db = client.db("test");
+            let products = await db.collection("products").find().toArray();
+            let productsN = await db.collection("products").find({_id: new ObjectId('63fe11b2f4c9ac09ea1c5a4b')}).count();
+            console.log(productsN)
+            var heeh = 0;
+            products.forEach(element=>{
+                console.log(element._id);
+                heeh = element._id;
+            })
+            res.render('home', {'products': products});
+            return heeh;
+        }
+        // Product.find({}).populate('category').populate('theme')
+        // .then(products=>{
+        //     res.render('home', {products: convertToArrayObjects(products)})
+        // }).catch(next)
+        console.log(hi());
         
     }
 

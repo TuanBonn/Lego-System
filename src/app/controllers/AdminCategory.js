@@ -26,7 +26,7 @@ class AdminCategory {
         cat.name = name;
         cat.description = description;
         cat.img = img;
-        cat.save().then(res.redirect('/category/'));
+        cat.save().then(res.redirect('/admin/category'));
 
     }
 
@@ -44,13 +44,13 @@ class AdminCategory {
             description: req.body.description,
             img: req.body.img
         }).then(()=>{
-            res.redirect('/category');
+            res.redirect('/admin/category');
         }).catch(err=>console.log(err));
     }
 
     deleteCategory(req, res){
         Category.deleteOne({_id: req.params.id})
-        .then(()=>res.redirect('/category/'))
+        .then(()=>res.redirect('/admin/category/'))
         .catch(err=>console.log(err));
     }
 

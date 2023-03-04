@@ -22,7 +22,7 @@ const { response } = require('express');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
-var url = 'mongodb://127.0.0.1:27017';
+var url = 'mongodb+srv://lego:lego@cluster0.3no8d6y.mongodb.net/test';
 var MongoClient = require('mongodb').MongoClient;
 
 
@@ -195,27 +195,100 @@ class AdminController {
      }
 
      dashboard(req, res){
-        Order.find({})
-        .then(orders=>{
-            var waiting = 0;
-            var confirmed = 0;
-            var delivery = 0;
-            var canceled = 0;
+        async function countComeback(id){
+            let client = await MongoClient.connect(url);
+            let db = client.db("test");
+            let count = await db.collection("orders").find({_id: id}).count();
+            return count;
+        }
 
-            orders.forEach(element => {
-                if(element.status == "Waiting"){
-                    waiting = waiting + 1;
-                }else if(element.status == "Delivery"){
-                    delivery = delivery + 1;
-                }else if(element.status = "Confirmed"){
-                    confirmed = confirmed + 1;
-                }else if(element.status == "Canceled"){
-                    canceled = canceled + 1;
+        async function renDashBoard(){
+            //take Comeback Ratting
+            let client = await MongoClient.connect(url);
+            let db = client.db("test");
+            let users = await db.collection("users").find().toArray();
+            
+            var counting = 0;
+            users.forEach(element=>{
+                console.log(countComeback(element._id));
+                if(countComeback(element._id)>1){
+                    counting = counting+1;
                 }
-            });
+            })
 
-            res.render('admin/dashboard', {admin: true, waiting: waiting, confirmed: confirmed, delivery: delivery, canceled: canceled});
-        })
+            Order.find({})
+            .then(orders=>{
+                var waiting = 0;
+                var confirmed = 0;
+                var delivery = 0;
+                var canceled = 0;
+    
+                orders.forEach(element => {
+                    if(element.status == "Waiting"){
+                        waiting = waiting + 1;
+                    }else if(element.status == "Delivery"){
+                        delivery = delivery + 1;
+                    }else if(element.status = "Confirmed"){
+                        confirmed = confirmed + 1;
+                    }else if(element.status == "Canceled"){
+                        canceled = canceled + 1;
+                    }
+                });
+    
+                Product.find({})
+                .then(products=>{
+    
+                    Order.find({})
+                    .then(order=>{
+    
+                        var totalOrder = 0;
+                        order.forEach(element => {
+                            totalOrder = totalOrder+1;
+                        });
+    
+                        Account.find({})
+                        .then(user=>{
+                            var totalUser = 0;
+                            var totalAdmin = 0;
+                            user.forEach(element => {
+                                if(element.role == "USER")
+                                    totalUser = totalUser+1;
+                                else
+                                    totalAdmin = totalAdmin+1;
+                            });
+                            var rattingComeBack = 0;
+                            // user.forEach(element => {
+                            //     Order.count({user: element._id})
+                            //     .then(count=>{
+                            //         if(count>1){
+                            //             rattingComeBack = rattingComeBack + 1;
+                            //             console.log(rattingComeBack)
+                            //         }
+                            //     })
+                            // });
+                            var rattingResult = rattingComeBack / totalOrder;
+                            res.render('admin/dashboard',{
+                                admin: true, 
+                                waiting: waiting, 
+                                confirmed: confirmed, 
+                                delivery: delivery, 
+                                canceled: canceled, 
+                                products: convertToArrayObjects(products),
+                                order: totalOrder,
+                                user: totalUser,
+                                admin: totalAdmin,
+                                ratting: counting
+                            })
+                        })
+    
+                    })
+                    
+                })
+                
+            })
+        }
+
+        renDashBoard();
         
      }
 
