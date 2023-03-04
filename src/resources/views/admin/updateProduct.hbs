@@ -1,11 +1,15 @@
-<div style = "position:fixed; left:300px; top:90px" >
-    <div class="panel-heading">
-        <h1 style="color:orangered">Edit Product</h1>
-    </div>
-<form action="/admin/update" method="POST">
-<div class="mb-3">
-    <label for="id" class="form-label">Product ID (Do Not Edit)</label>
-    <input type="text" style="width: 700px" class="form-control" name="id" value="{{Product._id}}">
+<div class="container col-md-6 text-center mt-3 card p-2 bg-warning">
+<h1 style="color:red;">update product</h1>
+
+<form action="/admin/products/update/" method="POST">
+    ID: <input type="text" name="id" value="{{Product._id}}"><br>
+    Name: <input type="text" name="name" value="{{Product.name}}"><br>
+    Age: <input type="number" name="age" value="{{Product.age}}"><br>
+    Price: <input type="number" name="price" value="{{Product.price}}"><br>
+    Quantity: <input type="number" name="quantity" value="{{Product.quantity}}"><br>
+    Description: <input type="text" name="description" value="{{Product.description}}"><br>
+    rating: <input type="text" name="ratting" value="{{Product.ratting}}"><br>
+<button type="submit">Update product</button>
 
     <label for="price" class="form-label">Product Name</label><label for="price" class="form-label" style="position:fixed; left:666px">Age</label>
     <div class="row">
