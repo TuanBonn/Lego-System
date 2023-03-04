@@ -10,6 +10,7 @@ const Order = require('../models/Order')
 const mongoose = require('mongoose')
 
 
+
 const {convertToObject} = require('../../util/mongoose');
 const {convertToArrayObjects} = require('../../util/mongoose');
 
@@ -126,6 +127,7 @@ class AdminController {
         newProduct.quantity = form.quantity;
         newProduct.description = form.description;
         newProduct.ratting = form.ratting;
+        newProduct.img1 = form.img1;
         newProduct.save().then(res.redirect('/admin/products'))
     }
 
@@ -136,7 +138,7 @@ class AdminController {
         })
     }
     update(req, res, next) {
-        //console.log('demo',req.body);
+        console.log('demo',req.body);
         product.findByIdAndUpdate(req.body.id, req.body, (error, data) =>{
             res.redirect('/admin/products');
         })
