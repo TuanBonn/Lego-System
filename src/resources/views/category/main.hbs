@@ -9,54 +9,44 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="header">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light"> 
-
-                <a class="navbar-brand" href="#">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/LEGO_logo.svg" alt="" style="width: 55px; height: 55px;">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active link-header">
-                        <a class="link-hover" href="/">SHOP</a>
-                    </li>
-                    <li class="nav-item active link-header">
-                        <a class="link-hover" href="/">DISCOVER</a>
-                    </li>
-                    <li class="nav-item active link-header">
-                        <a class="link-hover" href="/">HELP</a>
-                    </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-
-                    </form>
-                    <div class="cart-icon">
-                        <a class="cart-link icon-header" href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
-                    </div>
-                    
-                    <div class="user-icon">
-                        <a href="#" class="user-link icon-header"><i class="fa-solid fa-user"></i></a>
-                    </div>
-                    
-                </div>
-
-        </nav>
-    </div>
-</div>
-
-
-
-<h1>Category management</h1>
-<a class="btn btn-primary" href="/category/add">Add Category</a>
 {{!-- <li><a href="/category/add">Add Category</a></li> --}}
-<table class="table table-hover">
+<div class="container mt-3">
+    <h1>Category management</h1>
+    <div class="text-right">
+        <a type="button" class="btn btn-primary" href="/category/add">Add Category</a>
+    </div>
+    <table class="table table-bordered table-hover">
+	<thead ">
+		<tr>
+            <th scope="col">Name</th>
+			<th scope="col">Description</th>
+			<th scope="col">Img</th>
+            <th scope="col">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+        {{#each categories}}
+            <tr>
+                <td>
+                        {{this.name}}     
+                </td>
+                <td>
+                        {{this.description}}
+                </td>
+                <td>
+                        <img class="img-thumbnail" alt="Cinque Terre" src="/img/Categories/{{this.img}}" alt="" width="110" height="100">      
+                </td>
+                <td class="text-right">
+                        <a class="btn btn-primary" href="/category/edit/{{this._id}}">Edit</a>
+                        <a class="btn btn-danger" href="/category/delete/{{this._id}}">Delete</a>    
+                </td>
+            </tr>   
+        {{/each}}
+	</tbody>
+</table>
+
+</div>
+{{!-- <table class="table table-hover">
 	<thead>
 		<tr>
 			<th scope="col">Name</th>
@@ -92,7 +82,7 @@
             </tr>   
         {{/each}}
 	</tbody>
-</table>
+</table> --}}
 
 </div>
 

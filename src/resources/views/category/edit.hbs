@@ -7,68 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-<div class="header">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light"> 
-
-                <a class="navbar-brand" href="#">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/LEGO_logo.svg" alt="" style="width: 55px; height: 55px;">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active link-header">
-                        <a class="link-hover" href="/">SHOP</a>
-                    </li>
-                    <li class="nav-item active link-header">
-                        <a class="link-hover" href="/">DISCOVER</a>
-                    </li>
-                    <li class="nav-item active link-header">
-                        <a class="link-hover" href="/">HELP</a>
-                    </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-
-                    </form>
-                    <div class="cart-icon">
-                        <a class="cart-link icon-header" href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
-                    </div>
-                    
-                    <div class="user-icon">
-                        <a href="#" class="user-link icon-header"><i class="fa-solid fa-user"></i></a>
-                    </div>
-                    
-                </div>
-
-        </nav>
-    </div>
-</div>
-
-
-
-<h2>Edit Products</h2>
-    <h1>
+    <div class="container mt-3 col-md-6 mt-3 card p-2 ">
+        <h1>Edit Category</h1>
         <form action="/category/edit" method="post">
-    <input type="hidden" name="_id" value="{{category._id}}">
-        Name 
-        <br>
-        <input type="text" name="name" value="{{category.name}}">     
-        <br>
-        Description 
-        <br>
-        <input type="text" name="description" value="{{category.description}}">
-        <br>
-        Select a file 
-        <br>
-        <input type="file" name="img" value="{{category.img}}">
-        <br>
-        <input class="btn btn-primary" type="submit" value="Edit">       
-    </form>
-    </h1>
+            <input type="hidden" name="_id" value="{{category._id}}">
+            <div class="mb-3">
+                <label class="form-label">Name:</label>
+                <input class="form-control" type="text" placeholder="Enter Name" name="name" value="{{category.name}}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description:</label>
+                <input class="form-control" type="text" placeholder="Enter Description" name="description" value="{{category.description}}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Select a file:</label>
+                <input class="form-control" type="file" name="img" value="{{category.img}}">
+            </div>
+            <div class="text-center">
+            <input class="btn btn-primary" type="submit" value="Edit">  
+            </div>
+        </form>
+    </div>
 </body>
 </html>
