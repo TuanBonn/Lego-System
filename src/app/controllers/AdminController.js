@@ -161,7 +161,8 @@ class AdminController {
             
         //     //(error, data)=>{
         //     //console.log('danh sach product', data);
-        product.find({}, (error, data)=>{
+        var textboxValue = document.getElementById("searchName").value;
+        product.find({name: textboxValue}, (error, data)=>{
                 console.log(data);
         res.render('admin/products', {admin:true, Product: convertToArrayObjects(data)});
         // //});
