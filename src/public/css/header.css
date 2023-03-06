@@ -20,3 +20,8 @@
     font-size: 23px;
     color: black;
 }
+.container_new{
+    width: 1350px;
+    max-width: 100%;
+    margin: 0 auto;
+}

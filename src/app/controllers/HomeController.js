@@ -21,27 +21,11 @@ var MongoClient = require('mongodb').MongoClient;
 
 class NewsController {
     //render all products to homepage with two ways - NQT 27/2/2023
-    index(req, res, next) {
-        async function hi(){
-            let client = await MongoClient.connect(url);
-            let db = client.db("test");
-            let products = await db.collection("products").find().toArray();
-            let productsN = await db.collection("products").find({_id: new ObjectId('63fe11b2f4c9ac09ea1c5a4b')}).count();
-            console.log(productsN)
-            var heeh = 0;
-            products.forEach(element=>{
-                console.log(element._id);
-                heeh = element._id;
-            })
-            res.render('home', {'products': products});
-            return heeh;
-        }
-        // Product.find({}).populate('category').populate('theme')
-        // .then(products=>{
-        //     res.render('home', {products: convertToArrayObjects(products)})
-        // }).catch(next)
-        console.log(hi());
-        
+    index(req, res) {
+        Product.find({}).populate('category').populate('theme')
+        .then(products=>{
+            res.render('home', {products: convertToArrayObjects(products)})
+        }).catch(err=>console.log(err));
     }
 
     product(req, res){
@@ -51,9 +35,13 @@ class NewsController {
         .then(product=>{
             Product.find({})
             .then(products=>{
+                return products;
+            })
+            .then((products)=>{
                 console.log({product: convertToObject(product), products});
                 res.render('user/viewProduct', {product: convertToObject(product), products: convertToArrayObjects(products)})
-            })
+            }
+            )
         })
         .catch(err=>console.log(err)); 
     }
@@ -282,8 +270,8 @@ class NewsController {
         prod.description = "hahaha";
         prod.status = "EXIST";
         prod.ratting = 5;
-        prod.theme = "63fd71c0bcd449ebcef1001d";
-        prod.category = "63fd761dc94a88b6ef9be5c2"
+        prod.theme = "6402cea52895e6bf97ca25d3";
+        prod.category = "6402c84bd8503ea7c6fd76fc"
         prod.save().then(()=>{
             console.log('Insert Success');
             res.redirect('/');
