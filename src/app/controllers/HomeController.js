@@ -324,19 +324,7 @@ class NewsController {
     }
 
 
-    orderDetail(req,res){
-        OrderDetails.find({user: req.signedCookies.userId}).populate('product')
-        .populate('order').then(orderdetails=>{
-            var total = 0;
-            orderdetails.forEach(
-                element=>{
-                    total + element.product.price * element.quantity;
-                } )
-                res.render('user/orderDetail',{orderdetails: convertToArrayObjects(orderdetails),total:total});
-        }).catch(err=>console.log(err))
-      
-    }
-
+    
 
 
 }

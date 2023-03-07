@@ -5,6 +5,7 @@ const adminController = require('../app/controllers/AdminController');
 const UserDetailController = require('../app/controllers/UserDetailController');
 const adminCategory = require('../app/controllers/AdminCategory');
 const security = require('../security/authenticationAdmin');
+const { editIn4, editIn4Save } = require('../app/controllers/AdminController');
 
 // newsController.index;
 
@@ -24,7 +25,7 @@ router.post("/theme/add", security.auth, adminController.doThemeAdd);
 router.get("/theme/delete/:id", security.auth, adminController.doThemeDelete);
 
 //admindetail
-router.get('/account/', adminController.detail);
+router.get('/account', adminController.detail);
 
 router.get('/account/logout',UserDetailController.logout);
 
@@ -32,7 +33,12 @@ router.get('/account/changePassword',adminController.changePassword);
 
 router.post('/account/changePassword',adminController.changePasswordSave);
 
+router.get('/account/editInfor',adminController.editIn4); 
 
+router.post('/account/editInfor',adminController.editIn4Save);
+
+// order
+router.get('/order/',adminController.orderManager);
 
 //products
 router.get('/products/', adminController.productManager);

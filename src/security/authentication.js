@@ -9,7 +9,6 @@ class auth{
             Account.findOne({_id: req.signedCookies.userId})
             .then(account=>{
                 if(account===null){
-                    
                     res.redirect('auth/login');
                     return;
                 }else{

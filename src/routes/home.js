@@ -40,7 +40,9 @@ router.get('/editInfor',UserDetailController.editIn4);
 
 router.post('/editInfor',UserDetailController.editIn4Save);
 
-router.get('/orderDetail',HomeController.orderDetail);
+router.get('/orderDetail',UserDetailController.orderDetail);
+
+router.get('/order/:id',UserDetailController.order);
 
 
 

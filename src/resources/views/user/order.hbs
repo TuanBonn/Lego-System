@@ -16,30 +16,28 @@
         </div>
         {{!--  --}}
     
-            <div class="my-bag col-8  ">
-            {{#each orders}}
-                <div class="my-bag-list">
-                       
-                            <div class="my-bag-item">
-                                <div class="my-bag-item-img">
-                                    <div>Order number: {{oid}}</div>
-                                   <a href="/order/{{_id}}" class="my-bag-item-product-price">{{customerName}}</a> 
-                                   {{!-- <div class="my-bag-item-product-price"></div> --}}
-                                    {{!-- <input type="hidden" name="orderId" value="{{_id}}"> --}}
-                                </div>
-                                <div class="my-bag-infor">
-                                  
-                                </div>
-                                                            
-                                    <label for="inputEmail4" class="form-label">Status: </label>
-                                   <span style="margin-left: 15px;color:#FFC93C;">{{status}}</span>
-                                
-                            </div>
+            <div class="my-bag col-6  ">
+            {{#each orderdetails}}
+                    {{!-- <div class="my-bag-list">
                         
-                </div>
+                                <div class="my-bag-item">
+                                    <div class="my-bag-item-img">
+                                        <div>Order number: {{this.order.oid}}</div>
+                                        <div class="my-bag-item-product-price">{{customerName}}</div>
+                                    </div>
+                                    <div class="my-bag-infor">
+                                    
+                                    </div>
+                                                                
+                                        <label for="inputEmail4" class="form-label">Status: </label>
+                                    <span style="margin-left: 15px;color:#FFC93C;">{{status}}</span>
+                                    
+                                </div>
+                            
+                    </div> --}}
 
-                  {{!-- <div class="my-bag-list">
-                       
+                  <div class="my-bag-list">
+                        
                             <div class="my-bag-item">
                                 <div class="my-bag-item-img">
                                     <img src="/img/products/{{this.product.img1}}" alt="" class="s">
@@ -52,18 +50,23 @@
                                     <input type="number" name="quantity" value="{{this.quantity}}" class="float-right d-flex justify-content-end " style="margin-left: 20px;">
                                 </div>
                                                             
-                                     <label for="inputEmail4" class="form-label">Status: </label>
-                                   <span style="margin-left: 15px;color:#FFC93C;">{{this.order.status}}</span>
+                                   
                                 
                             </div>
                         
-                </div> --}}
+                </div>
             {{/each}}
-            </div>
            
-            </div>
         {{!--  --}}
        </div>
+         <div class="payment-confirm col-2">
+                <span class="order-summary-header">Order Summary</span>
+                <div class="order-total-summary">
+                    <span class="order-total-header">Order Total</span>
+                    <span class="order-total">${{total}}</span>
+                </div>
+                <a href="/orderDetail"><i class="fa-solid"></i>Back to orders</a>
+            </div>
        
       </div>
     

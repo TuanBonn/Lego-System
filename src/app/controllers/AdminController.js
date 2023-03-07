@@ -22,6 +22,7 @@ const { ObjectId } = require('mongodb');
 const { response } = require('express');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
+const OrderDetails = require('../models/OrderDetails');
 
 var url = 'mongodb+srv://lego:lego@cluster0.3no8d6y.mongodb.net/test';
 var MongoClient = require('mongodb').MongoClient;
@@ -294,6 +295,47 @@ class AdminController {
         renDashBoard();
         
      }
+
+
+     editIn4(req,res){
+        User.findOne({account :new ObjectId(req.signedCookies.adminId)}).populate('account')
+        .then(user=>{
+            User.find({}).then(
+                res.render('admin/editInformation',{user:convertToObject(user)})
+            )
+        })
+               
+    }
+
+    editIn4Save(req,res){
+        const form = req.body
+        const userID = {account :new ObjectId(req.signedCookies.adminId)};
+        
+        User.findOne(userID)
+        .then(user =>{
+            
+            console.log(user.name)
+            // ,{phonenumber: form.phone},{email:form.email},{dob:form.dob},{address: form.country}
+            User.updateOne({account: req.signedCookies.adminId},{name: form.name, 
+                                                                email:form.email,
+                                                                phonenumber: form.phone,
+                                                                dob:form.dob,
+                                                                address: form.country
+                                                            })
+            .then(res.redirect('/admin/account'))
+        })
+
+    }
+
+    orderManager(req,res){
+        OrderDetails.find({}).then(
+            orderdetails=>{
+                console.log(orderdetails.length)
+                res.render('admin/orderAD',{orderdetails:convertToObjects(orderdetails)})
+            }
+        )
+    }
+
 
 }
 
