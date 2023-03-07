@@ -39,7 +39,7 @@ router.get('/products/', adminController.productManager);
 
 router.get('/products/add', adminController.addProduct);
 
-router.post('/products/add',adminController.SubmitProduct);
+router.post('/products/addP',adminController.SubmitProduct);
 
 router.get('/products/update/:id', adminController.updateProduct);
 
@@ -47,7 +47,7 @@ router.get('/products/search', adminController.searchProduct);
 
 router.get('/products/delete/:id', adminController.deleteProduct);
 
-router.post('/products/update', adminController.update);//?
+router.post('/products/updateP', adminController.update);//?
 
 
 //category

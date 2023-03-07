@@ -1,6 +1,6 @@
 const Account = require('../models/Account');
 const User = require('../models/User');
-
+const Category = require('../models/Category');
 const Theme = require('../models/Theme');
 
 const express = require('express');
@@ -112,27 +112,33 @@ class AdminController {
 
     //add product
     addProduct(req, res, next) {
+        Theme.find({}, (error, theme)=>{
+        Category.find({}, (error, category)=>{
+
         //product.create(req.body);
-        res.render('admin/addProduct', {admin:true})
+        res.render('admin/addProduct', {admin:true, themes: convertToArrayObjects(theme), categories: convertToArrayObjects(category)})
+        })
         //res.redirect('admin/products');
     }
+)}
     SubmitProduct(req, res, next) {
-        // product.create(req.body);
-        // res.redirect('/admin/products');
-        const form = req.body;
-        const newProduct = new product();
-        newProduct.name = form.name;
-        newProduct.age = form.age;
-        newProduct.price = form.price;
-        newProduct.quantity = form.quantity;
-        newProduct.description = form.description;
-        newProduct.ratting = form.ratting;
-        newProduct.img1 = form.img1;
-        newProduct.save().then(res.redirect('/admin/products'))
+        product.create(req.body);
+        res.redirect('/admin/products');
+        // const form = req.body;
+        // const newProduct = new product();
+        // newProduct.name = form.name;
+        // newProduct.age = form.age;
+        // newProduct.price = form.price;
+        // newProduct.quantity = form.quantity;
+        // newProduct.description = form.description;
+        // newProduct.ratting = form.ratting;
+        // newProduct.img1 = form.img1;
+        // newProduct.save().then(res.redirect('/admin/products'))
     }
 
     //update product
     updateProduct(req, res, next) {
+        
         product.findById(req.params.id, (error, data) => {
             res.render('admin/updateProduct', {admin:true, Product:convertToObject(data)})
         })
@@ -153,22 +159,12 @@ class AdminController {
 
     //search product
     searchProduct(req, res, next) {
-        //
-        // var name = req.query.name;
-        // var data = posts.filter(function(item){
-        //     return Product.name === parseInt(name)
-        // });
-        // res.render('admin/search', {admin:true, Product: convertToArrayObjects(data)});
-            
-            
-        //     //(error, data)=>{
-        //     //console.log('danh sach product', data);
-        var textboxValue = document.getElementById("searchName").value;
-        product.find({name: textboxValue}, (error, data)=>{
+        
+        product.find({name: req.body.searchName}, (error, data)=>{
                 console.log(data);
-        res.render('admin/products', {admin:true, Product: convertToArrayObjects(data)});
-        // //});
+        res.render('admin/searchProduct', {admin:true, products: convertToArrayObjects(data)});
         });
+        
     }
 
 
