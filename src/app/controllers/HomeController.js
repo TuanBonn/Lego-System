@@ -167,7 +167,7 @@ class NewsController {
                 })
                 .catch(err=>console.log(err));
                 //create OrderDetail
-                Cart.find({}).populate('product').select('product quantity')
+                Cart.find({user: req.signedCookies.userId}).populate('product').select('product quantity')
                 .then(carts=>{
                     carts.forEach(element => {
                         const orderDetail = new OrderDetail();
@@ -181,7 +181,7 @@ class NewsController {
                     });
                 }).then(
                     ()=>{
-                        Cart.deleteMany({})
+                        Cart.deleteMany({user: req.signedCookies.userId})
                         .then(()=>{
                             console.log('All Item In Cart is DELETED SUCCESSFULLY')
                             res.redirect('/');    
