@@ -1,6 +1,6 @@
 const Account = require('../models/Account');
 const User = require('../models/User');
-
+const Category = require('../models/Category');
 const Theme = require('../models/Theme');
 
 const express = require('express');
@@ -8,6 +8,7 @@ const router = express.Router();
 const product = require('../models/Product');
 const Order = require('../models/Order')
 const mongoose = require('mongoose')
+
 
 
 const {convertToObject} = require('../../util/mongoose');
@@ -22,7 +23,7 @@ const { response } = require('express');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
-var url = 'mongodb://127.0.0.1:27017';
+var url = 'mongodb+srv://lego:lego@cluster0.3no8d6y.mongodb.net/test';
 var MongoClient = require('mongodb').MongoClient;
 
 
@@ -120,32 +121,39 @@ class AdminController {
 
     //add product
     addProduct(req, res, next) {
+        Theme.find({}, (error, theme)=>{
+        Category.find({}, (error, category)=>{
+
         //product.create(req.body);
-        res.render('admin/addProduct', {admin:true})
+        res.render('admin/addProduct', {admin:true, themes: convertToArrayObjects(theme), categories: convertToArrayObjects(category)})
+        })
         //res.redirect('admin/products');
     }
+)}
     SubmitProduct(req, res, next) {
-        // product.create(req.body);
-        // res.redirect('/admin/products');
-        const form = req.body;
-        const newProduct = new product();
-        newProduct.name = form.name;
-        newProduct.age = form.age;
-        newProduct.price = form.price;
-        newProduct.quantity = form.quantity;
-        newProduct.description = form.description;
-        newProduct.ratting = form.ratting;
-        newProduct.save().then(res.redirect('/admin/products'))
+        product.create(req.body);
+        res.redirect('/admin/products');
+        // const form = req.body;
+        // const newProduct = new product();
+        // newProduct.name = form.name;
+        // newProduct.age = form.age;
+        // newProduct.price = form.price;
+        // newProduct.quantity = form.quantity;
+        // newProduct.description = form.description;
+        // newProduct.ratting = form.ratting;
+        // newProduct.img1 = form.img1;
+        // newProduct.save().then(res.redirect('/admin/products'))
     }
 
     //update product
     updateProduct(req, res, next) {
+        
         product.findById(req.params.id, (error, data) => {
             res.render('admin/updateProduct', {admin:true, Product:convertToObject(data)})
         })
     }
     update(req, res, next) {
-        //console.log('demo',req.body);
+        console.log('demo',req.body);
         product.findByIdAndUpdate(req.body.id, req.body, (error, data) =>{
             res.redirect('/admin/products');
         })
@@ -160,21 +168,12 @@ class AdminController {
 
     //search product
     searchProduct(req, res, next) {
-        //
-        // var name = req.query.name;
-        // var data = posts.filter(function(item){
-        //     return Product.name === parseInt(name)
-        // });
-        // res.render('admin/search', {admin:true, Product: convertToArrayObjects(data)});
-            
-            
-        //     //(error, data)=>{
-        //     //console.log('danh sach product', data);
-        product.find({}, (error, data)=>{
+        
+        product.find({name: req.body.searchName}, (error, data)=>{
                 console.log(data);
-        res.render('admin/products', {admin:true, Product: convertToArrayObjects(data)});
-        // //});
+        res.render('admin/searchProduct', {admin:true, products: convertToArrayObjects(data)});
         });
+        
     }
 
 
@@ -204,28 +203,72 @@ class AdminController {
      }
 
      dashboard(req, res){
-        Order.find({})
-        .then(orders=>{
-            var waiting = 0;
-            var confirmed = 0;
-            var delivery = 0;
-            var canceled = 0;
-
-            orders.forEach(element => {
-                if(element.status == "Waiting"){
-                    waiting = waiting + 1;
-                }else if(element.status == "Delivery"){
-                    delivery = delivery + 1;
-                }else if(element.status = "Confirmed"){
-                    confirmed = confirmed + 1;
-                }else if(element.status == "Canceled"){
-                    canceled = canceled + 1;
-                }
-            });
-
-            res.render('admin/dashboard', {admin: true, waiting: waiting, confirmed: confirmed, delivery: delivery, canceled: canceled});
-        })
-        
+            Order.find({})
+            .then(orders=>{
+                var waiting = 0;
+                var confirmed = 0;
+                var delivery = 0;
+                var canceled = 0;
+    
+                orders.forEach(element => {
+                    if(element.status == "Waiting"){
+                        waiting = waiting + 1;
+                    }else if(element.status == "Delivery"){
+                        delivery = delivery + 1;
+                    }else if(element.status = "Confirmed"){
+                        confirmed = confirmed + 1;
+                    }else if(element.status == "Canceled"){
+                        canceled = canceled + 1;
+                    }
+                });
+    
+                Product.find({})
+                .then(products=>{
+    
+                    Order.find({})
+                    .then(order=>{
+    
+                        var totalOrder = 0;
+                        order.forEach(element => {
+                            totalOrder = totalOrder+1;
+                        });
+                        
+                        var confirmedOrderRating = 0;
+                        order.forEach(element=>{
+                            if(element.status == "Completed"){
+                                confirmedOrderRating++;
+                            }
+                        })
+                        confirmedOrderRating = confirmedOrderRating /  totalOrder * 100;
+                        Account.find({})
+                        .then(user=>{
+                            var totalUser = 0;
+                            var totalAdmin = 0;
+                            user.forEach(element => {
+                                if(element.role == "USER")
+                                    totalUser = totalUser+1;
+                                else
+                                    totalAdmin = totalAdmin+1;
+                            });
+                            res.render('admin/dashboard',{
+                                admin: true, 
+                                waiting: waiting, 
+                                confirmed: confirmed, 
+                                delivery: delivery, 
+                                canceled: canceled, 
+                                products: convertToArrayObjects(products),
+                                order: totalOrder,
+                                user: totalUser,
+                                admin: totalAdmin,
+                                orderratting: confirmedOrderRating
+                            })
+                        })
+    
+                    })
+                    
+                })
+                
+            })    
      }
 
 }

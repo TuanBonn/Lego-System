@@ -9,63 +9,162 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="dashboard">
-        <div class="recommend">
-            <span class="rcmd-header">Welcome to LEGO Dashboard</span>
-            <div class="wrap-list-product-recommended grid_row">
 
-                <div class="product-item wating-background">
-                    <div class="first-part">
-                        <span class="count">{{waiting}}</span>
-                        <h5 class="type-count-header">Waiting</h5>
-                    </div>
-                    <div class="second-part">
-                        <img src="/img/dashboard/waiting.jpg" alt="" srcset="">
-                    </div>
+<div class="dashboard-background">
+    <div class="container_new">
+        <div class="dashboard">
+            <div class="dashboard-menu">
+                <div class="img-admin">
+                    <img src="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F002%2F205%2F309%2F1d3.jpg" alt="" class="s">
                 </div>
-
-                <div class="product-item delivery-background">
-                    <div class="first-part">
-                        <span class="count">{{delivery}}</span>
-                        <h5 class="type-count-header">Delivery</h5>
-                    </div>
-                    <div class="second-part">
-                        <img src="/img/dashboard/delivery.jpg" alt="" srcset="">
-                    </div>
+                <div class="list-menu-item">
+                    <a href="/admin/products" class="link-item-menu">
+                        <div class="item-menu">
+                            Products
+                        </div>
+                    </a>
+                    <a href="/admin/theme" class="link-item-menu">
+                        <div class="item-menu">
+                            Themes
+                        </div>
+                    </a>
+                     <a href="/admin/category" class="link-item-menu">
+                        <div class="item-menu">
+                            Categories
+                        </div>
+                    </a>
+                    <a href="/admin" class="link-item-menu">
+                        <div class="item-menu">
+                            Order
+                        </div>
+                    </a>
+                    <a href="/admin/account" class="link-item-menu">
+                        <div class="item-menu">
+                            Accounts
+                        </div>
+                    </a>
                 </div>
-
-                <div class="product-item confirmed-background">
-                    <div class="first-part">
-                        <span class="count">{{confirmed}}</span>
-                        <h5 class="type-count-header">Completed</h5>
-                    </div>
-                    <div class="second-part">
-                        <img src="/img/dashboard/confirmed.jpg" alt="" srcset="">
-                    </div>
-                </div>
-
-                <div class="product-item canceled-background">
-                    <div class="first-part">
-                        <span class="count">{{canceled}}</span>
-                        <h5 class="type-count-header">Canceled</h5>
-                    </div>
-                    <div class="second-part">
-                        <img src="/img/dashboard/canceled.jpg" alt="" srcset="">
-                    </div>
-                </div>
-
             </div>
-        </div>
-        <div class="big-chart">
-        <div class="wrap-the-lastest grid_row">
-            <div class="lastest-item">
-                <div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
+            <div class="wrap-recommend">
+                <div class="recommend">
+                    <span class="rcmd-header">Welcome to LEGO Dashboard</span>
+                    <h2 class="rcmd-header">Order</h2>
+                    <div class="wrap-list-product-recommended grid_row">
+
+                        <div class="product-item wating-background">
+                            <div class="first-part">
+                                <span class="count">{{waiting}}</span>
+                                <h5 class="type-count-header">Waiting</h5>
+                            </div>
+                            <div class="second-part">
+                                <img src="/img/dashboard/waiting.jpg" alt="" srcset="">
+                            </div>
+                        </div>
+
+                        <div class="product-item delivery-background">
+                            <div class="first-part">
+                                <span class="count">{{delivery}}</span>
+                                <h5 class="type-count-header">Delivery</h5>
+                            </div>
+                            <div class="second-part">
+                                <img src="/img/dashboard/delivery.jpg" alt="" srcset="">
+                            </div>
+                        </div>
+
+                        <div class="product-item confirmed-background">
+                            <div class="first-part">
+                                <span class="count">{{confirmed}}</span>
+                                <h5 class="type-count-header">Completed</h5>
+                            </div>
+                            <div class="second-part">
+                                <img src="/img/dashboard/confirmed.jpg" alt="" srcset="">
+                            </div>
+                        </div>
+
+                        <div class="product-item canceled-background">
+                            <div class="first-part">
+                                <span class="count">{{canceled}}</span>
+                                <h5 class="type-count-header">Canceled</h5>
+                            </div>
+                            <div class="second-part">
+                                <img src="/img/dashboard/canceled.jpg" alt="" srcset="">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <h2 class="rcmd-header">User</h2>
+                <div class="recommend">
+                    <div class="wrap-list-product-recommended grid_row summary-total">
+
+                        <div class="product-item user-tag-infor">
+                            <span class="head-user-tag-infor">
+                                Total User
+                            </span>
+                            <div class="wrap-statistic-on-total total-user">
+                                {{user}}
+                            </div>
+                        </div>
+
+                        <div class="product-item user-tag-infor">
+                            <span class="head-user-tag-infor">
+                                Order Completed Rate
+                            </span>
+                            <div class="wrap-statistic-on-total comeback-buying">
+                                {{orderratting}}%
+                            </div>
+                        </div>
+
+                        <div class="product-item user-tag-infor">
+                            <span class="head-user-tag-infor">
+                                Total Order
+                            </span>
+                            <div class="wrap-statistic-on-total total-order">
+                                {{order}}
+                            </div>
+                        </div>
+
+                        <div class="product-item user-tag-infor">
+                            <span class="head-user-tag-infor">
+                                Total Admin
+                            </span>
+                            <div class="wrap-statistic-on-total">
+                                {{admin}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="big-chart">
+                    <h2 class="rcmd-header">Stock Information</h2>
+                    <div class="wrap-the-lastest grid_row">
+                        <div class="lastest-item chart">
+                            <div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
+                        </div>
+                        <div class="lastest-item chart">
+                            <div id="circle" style="width:100%; max-width:600px; height:500px;"></div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- <div class="statistic-basic-number">
+                    <div class="three-col">
+                        <div class="number-item">
+1
+                        </div>
+                    </div>
+                    <div class="three-col">
+                        <div class="number-item">
+1
+                        </div>
+                    </div>
+                    <div class="three-col">
+                        <div class="number-item">
+1
+                        </div>
+                    </div>
+                </div> --}}
             </div>
-            <div class="lastest-item">
-                <div id="circle" style="width:100%; max-width:600px; height:500px;"></div>
-            </div>
-        </div>
+
         </div>
     </div>
 </div>
@@ -267,19 +366,29 @@
 
     </footer>
 </div>
+<script id="entry-template" type="text/x-handlebars-template">
+  <div class="entry">
+    {{#each products}}
+    <h1>{{this.name}}</h1>
+    {{/each}}
+    <div class="body">
+      {{body}}
+    </div>
+  </div>
+</script>
 <script>
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
-var data = google.visualization.arrayToDataTable([
-  ['Contry', 'Mhl'],
-  ['Italy',55],
-  ['France',49],
-  ['Spain',44],
-  ['USA',24],
-  ['Argentina',15]
-]);
+    var dataArray = [
+        ['Product', 'Quantity'],
+];
+
+{{#each products}}
+dataArray.push(['{{this.name}}', {{this.quantity}}])
+{{/each}}
+var data = google.visualization.arrayToDataTable(dataArray);
 
 var options = {
   title:'World Wide LEGO Production'
@@ -304,8 +413,7 @@ var data = google.visualization.arrayToDataTable([
 ]);
 
 var options = {
-  title:'World Wide Theme Production',
-  is3D:true
+  title:'World Wide Wine Production'
 };
 
 var chart = new google.visualization.PieChart(document.getElementById('circle'));
