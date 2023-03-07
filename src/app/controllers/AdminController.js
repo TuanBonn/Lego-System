@@ -194,27 +194,6 @@ class AdminController {
      }
 
      dashboard(req, res){
-        async function countComeback(id){
-            let client = await MongoClient.connect(url);
-            let db = client.db("test");
-            let count = await db.collection("orders").find({_id: id}).count();
-            return count;
-        }
-
-        async function renDashBoard(){
-            //take Comeback Ratting
-            let client = await MongoClient.connect(url);
-            let db = client.db("test");
-            let users = await db.collection("users").find().toArray();
-            
-            var counting = 0;
-            users.forEach(element=>{
-                console.log(countComeback(element._id));
-                if(countComeback(element._id)>1){
-                    counting = counting+1;
-                }
-            })
-
             Order.find({})
             .then(orders=>{
                 var waiting = 0;
@@ -244,7 +223,14 @@ class AdminController {
                         order.forEach(element => {
                             totalOrder = totalOrder+1;
                         });
-    
+                        
+                        var confirmedOrderRating = 0;
+                        order.forEach(element=>{
+                            if(element.status == "Completed"){
+                                confirmedOrderRating++;
+                            }
+                        })
+                        confirmedOrderRating = confirmedOrderRating /  totalOrder * 100;
                         Account.find({})
                         .then(user=>{
                             var totalUser = 0;
@@ -255,17 +241,6 @@ class AdminController {
                                 else
                                     totalAdmin = totalAdmin+1;
                             });
-                            var rattingComeBack = 0;
-                            // user.forEach(element => {
-                            //     Order.count({user: element._id})
-                            //     .then(count=>{
-                            //         if(count>1){
-                            //             rattingComeBack = rattingComeBack + 1;
-                            //             console.log(rattingComeBack)
-                            //         }
-                            //     })
-                            // });
-                            var rattingResult = rattingComeBack / totalOrder;
                             res.render('admin/dashboard',{
                                 admin: true, 
                                 waiting: waiting, 
@@ -276,7 +251,7 @@ class AdminController {
                                 order: totalOrder,
                                 user: totalUser,
                                 admin: totalAdmin,
-                                ratting: counting
+                                orderratting: confirmedOrderRating
                             })
                         })
     
@@ -284,11 +259,7 @@ class AdminController {
                     
                 })
                 
-            })
-        }
-
-        renDashBoard();
-        
+            })    
      }
 
 }
