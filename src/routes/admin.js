@@ -37,8 +37,8 @@ router.get('/account/editInfor',adminController.editIn4);
 
 router.post('/account/editInfor',adminController.editIn4Save);
 
-// order
-router.get('/order/',adminController.orderManager);
+// // order
+// router.get('/order/',adminController.orderManager);
 
 //products
 router.get('/products/', adminController.productManager);

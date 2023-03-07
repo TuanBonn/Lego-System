@@ -303,14 +303,14 @@ class AdminController {
 
     }
 
-    orderManager(req,res){
-        OrderDetails.find({}).then(
-            orderdetails=>{
-                console.log(orderdetails.length)
-                res.render('admin/orderAD',{orderdetails:convertToObjects(orderdetails)})
-            }
-        )
-    }
+    // orderManager(req,res){
+    //     OrderDetails.find({}).then(
+    //         orderdetails=>{
+    //             console.log(orderdetails.length)
+    //             res.render('admin/orderAD',{orderdetails:convertToObjects(orderdetails)})
+    //         }
+    //     )
+    // }
 
 
 }
