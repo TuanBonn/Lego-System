@@ -148,9 +148,12 @@ class AdminController {
 
     //update product
     updateProduct(req, res, next) {
-        
-        product.findById(req.params.id, (error, data) => {
-            res.render('admin/updateProduct', {admin:true, Product:convertToObject(data)})
+        Theme.find({}, (error, theme)=>{
+            Category.find({}, (error, category)=>{    
+                product.findById(req.params.id, (error, data) => {
+                res.render('admin/updateProduct', {admin:true,themes: convertToArrayObjects(theme), categories: convertToArrayObjects(category), Product:convertToObject(data)})
+                })
+            })
         })
     }
     update(req, res, next) {
@@ -168,14 +171,14 @@ class AdminController {
     }
 
     //search product
-    searchProduct(req, res, next) {
+    // searchProduct(req, res, next) {
         
-        product.find({name: req.body.searchName}, (error, data)=>{
-                console.log(data);
-        res.render('admin/searchProduct', {admin:true, products: convertToArrayObjects(data)});
-        });
+    //     product.find({name: req.body.searchName}, (error, data)=>{
+    //             console.log(data);
+    //     res.render('admin/searchProduct', {admin:true, products: convertToArrayObjects(data)});
+    //     });
         
-    }
+    // }
 
 
 

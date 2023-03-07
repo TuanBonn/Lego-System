@@ -40,18 +40,18 @@
     <div class="col">
     <label for="theme" class="form-label">Theme: </label>
     <select name="theme" id="theme">
-    {{!-- {{#each themes}} --}}
-    <option value="{{Product._id}}">{{Product.name}}</option>
-    {{!-- {{/each}} --}}
+    {{#each themes}}
+    <option value="{{this._id}}">{{this.name}}</option>
+    {{/each}}
     </select>
     </div>
 
     <div class="col">
     <label for="category" class="form-label">Category: </label>
     <select name="category" id="category">
-    {{!-- {{#each categories}} --}}
-    <option value="{{Product._id}}">{{Product.name}}</option>
-    {{!-- {{/each}} --}}
+    {{#each categories}}
+    <option value="{{this._id}}">{{this.name}}</option>
+    {{/each}}
     </select>
     </div>
     

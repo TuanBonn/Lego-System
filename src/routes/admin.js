@@ -49,7 +49,7 @@ router.post('/products/addP',adminController.SubmitProduct);
 
 router.get('/products/update/:id', adminController.updateProduct);
 
-router.get('/products/search', adminController.searchProduct);
+// router.get('/products/search', adminController.searchProduct);
 
 router.get('/products/delete/:id', adminController.deleteProduct);
 
