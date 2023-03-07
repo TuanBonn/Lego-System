@@ -34,6 +34,13 @@ class NewsController {
         // hi();
         
     }
+    indexTheme(req, res, next) {
+     
+        Product.find({}).populate('category').populate('theme')
+        .then(products=>{
+            res.render('user/theme', {products: convertToArrayObjects(products)})
+        }).catch(next)
+    }
 
     product(req, res){
         Product.findOne({

@@ -43,6 +43,9 @@ router.post('/editInfor',UserDetailController.editIn4Save);
 router.get('/orderDetail',HomeController.orderDetail);
 
 
+router.get('/theme', HomeController.indexTheme);
+
+
 
 
 

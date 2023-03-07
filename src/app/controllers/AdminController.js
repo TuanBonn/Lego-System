@@ -51,11 +51,14 @@ class AdminController {
         //     if (err) return res.status(500).send(err);
         //     res.send(users);
         //   });
-
+        const search = {
+            s: (Boolean(req.query.s)) ? req.query.s : null
+        }
+        const where = (Boolean(search.s)) ? {"name": new RegExp(search.s, 'i')} : {}
         //View all products
-        product.find({}, (error, data)=>{
+        product.find(where, (error, data)=>{
             //console.log('danh sach product', data);
-            res.render('admin/products', {admin:true, products: convertToArrayObjects(data)});
+            res.render('admin/products', {admin:true, products: convertToArrayObjects(data), search: search});
         });
        
         // router.get('/',async (req,res)=>{
@@ -72,8 +75,14 @@ class AdminController {
     }
 
     async goTheme(req, res){
-        const themes = await Theme.find();
-        res.render("admin/theme/index", {admin: true, themes: convertToArrayObjects(themes)})
+        
+        const search = {
+            s: (Boolean(req.query.s)) ? req.query.s : null
+        }
+        const where = (Boolean(search.s)) ? {"name": new RegExp(search.s, 'i')} : {}
+
+        const themes = await Theme.find(where);
+        res.render("admin/theme/index", {admin: true, themes: convertToArrayObjects(themes), search: search})
     }
     async goThemeUpdate(req, res){
         const theme = await Theme.findById(req.params.id);
