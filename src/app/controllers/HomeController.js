@@ -133,30 +133,35 @@ class NewsController {
     }
 
     acceptPayment(req, res){
+    
         var oid = 0;
         Order.find({}).limit(1).sort({$natural:-1})
         .then(orders=>{
             orders.forEach(element=>{
                 console.log(element._id);
                 oid = element.oid+1;
-                console.log(oid);
-                const orderInfor = req.body;
-                const order = new Order();
-                order.customerName = orderInfor.customername;
-                order.address = orderInfor.address;
-                order.paymentmethod = 'Only Payment By Cash';
-                order.phonenumber = orderInfor.phonenumber;
-                order.email = orderInfor.email;
-                order.status = 'Waiting';
-                order.oid = oid;
-                order.user = req.signedCookies.userId;
-                //create Order
-                order.save()
-                .then(()=>{
-                    console.log('Create Order Successfull');
-                })
-                .catch(err=>console.log(err))
-                //get last order _id
+            })
+            return oid;
+        })
+        .then(oid=>{
+            console.log(oid);
+            const orderInfor = req.body;
+            const order = new Order();
+            order.customerName = orderInfor.customername;
+            order.address = orderInfor.address;
+            order.paymentmethod = 'Only Payment By Cash';
+            order.phonenumber = orderInfor.phonenumber;
+            order.email = orderInfor.email;
+            order.status = 'Waiting';
+            order.oid = oid;
+            order.user = req.signedCookies.userId;
+            //create Order
+            order.save()
+            .then(()=>{
+
+
+                console.log('Create Order Successfull');
+                //get last order _id has been created previously
                 var lastId = 0;
                 Order.find({}).limit(1).sort({$natural:-1})
                 .then(orders=>{
@@ -164,36 +169,43 @@ class NewsController {
                         lastId = element._id;
                         console.log(lastId);
                     });
+                    return lastId;
                 })
-                .catch(err=>console.log(err));
-                //create OrderDetail
-                Cart.find({user: req.signedCookies.userId}).populate('product').select('product quantity')
-                .then(carts=>{
-                    carts.forEach(element => {
-                        const orderDetail = new OrderDetail();
-                        orderDetail.order = lastId;
-                        orderDetail.product = element.product._id;
-                        orderDetail.quantity = element.quantity;
-                        console.log(orderDetail);
-                        orderDetail.save()
-                        .then(console.log('OrderDetail Created Successfully'))
-                        .catch(err=>console.log(err));
-                    });
-                }).then(
-                    ()=>{
-                        Cart.deleteMany({user: req.signedCookies.userId})
-                        .then(()=>{
-                            console.log('All Item In Cart is DELETED SUCCESSFULLY')
-                            res.redirect('/');    
-                        })
-                        .catch(err=>console.log(err))
-                    }
-                )
-                .catch(err=>console.log(err));
-            })
+                .then((lastId)=>{
+
+
+
+                    Cart.find({user: req.signedCookies.userId}).populate('product').select('product quantity')
+                    .then(carts=>{
+
+                        //save each item in cart of this user to orderDetails
+                        carts.forEach(element => {
+                            const orderDetail = new OrderDetail();
+                            orderDetail.order = lastId;
+                            orderDetail.product = element.product._id;
+                            orderDetail.quantity = element.quantity;
+                            console.log(orderDetail);
+                            orderDetail.save()
+                            .then(console.log('OrderDetail Created Successfully'))
+                            .catch(err=>console.log(err));
+                        });
+                    }).then(
+                        ()=>{
+
+                            //delete all item in cart of user
+                            Cart.deleteMany({user: req.signedCookies.userId})
+                            .then(()=>{
+                                console.log('All Item In Cart is DELETED SUCCESSFULLY')
+                                res.redirect('/');    
+                            })
+                            .catch(err=>console.log(err))
+                        }
+                    )
+                })
+            });
+            
         })
         .catch(err=>console.log(err));
-        //Delete All Item In cart
     }
 
 
