@@ -1,7 +1,7 @@
 <div class="container col-md-6 text-center mt-3 card p-2 bg-warning">
 <h1 style="color:red;">update product</h1>
 
-<form action="/admin/update" method="POST">
+<form action="/admin/products/update/" method="POST">
     ID: <input type="text" name="id" value="{{Product._id}}"><br>
     Name: <input type="text" name="name" value="{{Product.name}}"><br>
     Age: <input type="number" name="age" value="{{Product.age}}"><br>
@@ -11,6 +11,46 @@
     rating: <input type="text" name="ratting" value="{{Product.ratting}}"><br>
 <button type="submit">Update product</button>
 
-</form>
-<h2><a href="/admin/products" class="btn btn-info">Go to Product Management Page</a></h2>
+    <label for="price" class="form-label">Product Name</label><label for="price" class="form-label" style="position:fixed; left:666px">Age</label>
+    <div class="row">
+      <div class="col">
+        <input type="number" class="form-control" name="name" value="{{Product.name}}">
+    </div>
+      <div class="col">
+        <input type="number" class="form-control" name="age" value="{{Product.age}}">
+      </div>
+    </div>
+
+    <label for="price" class="form-label">Price</label><label for="price" class="form-label" style="position:fixed; left:666px">Quantity</label>
+    <div class="row">
+      <div class="col">
+        <input type="number" class="form-control" name="price" value="{{Product.price}}">
+    </div>
+      <div class="col">
+        <input type="number" class="form-control" name="quantity" value="{{Product.quantity}}">
+      </div>
+    </div>
+
+    <label for="description" class="form-label">Description</label>
+    <input type="text" style="width: 700px" class="form-control" name="description" value="{{Product.description}}">
+
+    <label for="rating" class="form-label">Rating</label>
+    <input type="number" style="width: 700px" class="form-control" name="ratting" value="{{Product.ratting}}">
+
+    <div style= "position:relative; top:10px">
+    <label for="image-upload" class="form-label">Image No1: </label>
+    <input  type="file"  id="img-upload-input" name="img1" value="{{Product.img1}}">
+    </div>
+    <div style= "position:relative; top:10px">
+    <label for="image-upload" class="form-label">Image No2: </label>
+    <input  type="file"  id="img-upload-input" name="img2" value="{{Product.img2}}">
+    </div>
+    <div style= "position:relative; top:10px">
+    <label for="image-upload" class="form-label">Image No3: </label>
+    <input  type="file"  id="img-upload-input" name="img3" value="{{Product.img3}}">
+    </div>
 </div>
+    <input type="submit" style="width: 100px" class="btn btn-warning">
+    <h2><a href="/admin/products" class="btn btn-info">Go back to Product Management Page</a></h2>
+</form>
+  </div>
