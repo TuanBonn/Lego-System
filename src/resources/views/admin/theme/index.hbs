@@ -7,39 +7,50 @@
     <title>Document</title>
 </head>
 <body>
+<style>
+* { 
+    margin: 0 auto
+}
+.table {
+    width: 90%;
+}
+
+</style>    
 <!-- Content main -->
-<div class="container">
-    <div>
-        <div>
-            <a class="btn btn-primary" href="/admin/theme/add" role="button">Add</a>
-            
-        </div>
-        <div>
-    <table class="table">
-    <thead>
-        <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Img</th>
-        </tr>
-    </thead>
-    <tbody>
-                    {{#each themes as |theme|}}
-                
-                    <tr>
-                        <td>{{name}}</td>
-                        <td>{{description}}</td>
-                        <td><a href=""><img src="/img/theme/{{img}}" alt="" srcset=""></td>
-                        <td>
-                            <a class="btn btn-primary" href="/admin/theme/update/{{_id}}" role="button">Update</a>
-                            <a class="btn btn-primary" href="/admin/theme/delete/{{_id}}" role="button">Delete</a>
-                        </td>
-                    </tr>
-                    {{/each}}
-    </tbody>
-    </table>
-            
-        </div>
+<h1 style="text-align:center ">THEME LIST</h1>
+<div>
+    <form class="form-inline my-2 my-lg-0" method="GET">
+                        <input class="form-control mr-sm-2" name="s" type="search" placeholder="Search" value="{{search.s}}">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit;margin-left:10%;margin-right:10% ">Search</button>
+                    </form>  
+    
+    <a class="btn btn-primary "  href="/admin/theme/add" role="button" style="margin-left:10%;margin-right:10%;display:block;margin-top:0%;margin-bottom:0%">Add</a>
+             
+<table class="table "border="1">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Img</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+                {{#each themes as |theme|}}
+               
+                <tr>
+                    <td>{{name}} </td>
+                    <td>{{description}}</td>
+                    <td><a href=""><img src="/img/theme/{{img}}" alt="IMG" style="width: 70px; height: 55px;"></td>
+                    <td>
+                        <a class="btn btn-primary" href="/admin/theme/update/{{_id}}" role="button">Update</a>
+                        <a class="btn btn-primary" href="/admin/theme/delete/{{_id}}" role="button">Delete</a>
+                    </td>
+                </tr>
+                {{/each}}
+  </tbody>
+</table>
+        
     </div>
 </div>
 

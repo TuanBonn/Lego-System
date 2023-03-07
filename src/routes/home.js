@@ -45,6 +45,9 @@ router.get('/orderDetail',UserDetailController.orderDetail);
 router.get('/order/:id',UserDetailController.order);
 
 
+router.get('/theme', HomeController.indexTheme);
+
+
 
 
 

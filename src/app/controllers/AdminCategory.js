@@ -21,7 +21,6 @@ class AdminCategory {
         const name = req.body.txtName
         const description = req.body.txtDescription
         const img = req.body.img
-
         const cat = new category();
         cat.name = name;
         cat.description = description;
