@@ -1,6 +1,6 @@
 const Account = require('../models/Account');
 const User = require('../models/User');
-
+const Category = require('../models/Category');
 const Theme = require('../models/Theme');
 
 const express = require('express');
@@ -112,27 +112,33 @@ class AdminController {
 
     //add product
     addProduct(req, res, next) {
+        Theme.find({}, (error, theme)=>{
+        Category.find({}, (error, category)=>{
+
         //product.create(req.body);
-        res.render('admin/addProduct', {admin:true})
+        res.render('admin/addProduct', {admin:true, themes: convertToArrayObjects(theme), categories: convertToArrayObjects(category)})
+        })
         //res.redirect('admin/products');
     }
+)}
     SubmitProduct(req, res, next) {
-        // product.create(req.body);
-        // res.redirect('/admin/products');
-        const form = req.body;
-        const newProduct = new product();
-        newProduct.name = form.name;
-        newProduct.age = form.age;
-        newProduct.price = form.price;
-        newProduct.quantity = form.quantity;
-        newProduct.description = form.description;
-        newProduct.ratting = form.ratting;
-        newProduct.img1 = form.img1;
-        newProduct.save().then(res.redirect('/admin/products'))
+        product.create(req.body);
+        res.redirect('/admin/products');
+        // const form = req.body;
+        // const newProduct = new product();
+        // newProduct.name = form.name;
+        // newProduct.age = form.age;
+        // newProduct.price = form.price;
+        // newProduct.quantity = form.quantity;
+        // newProduct.description = form.description;
+        // newProduct.ratting = form.ratting;
+        // newProduct.img1 = form.img1;
+        // newProduct.save().then(res.redirect('/admin/products'))
     }
 
     //update product
     updateProduct(req, res, next) {
+        
         product.findById(req.params.id, (error, data) => {
             res.render('admin/updateProduct', {admin:true, Product:convertToObject(data)})
         })
@@ -153,22 +159,12 @@ class AdminController {
 
     //search product
     searchProduct(req, res, next) {
-        //
-        // var name = req.query.name;
-        // var data = posts.filter(function(item){
-        //     return Product.name === parseInt(name)
-        // });
-        // res.render('admin/search', {admin:true, Product: convertToArrayObjects(data)});
-            
-            
-        //     //(error, data)=>{
-        //     //console.log('danh sach product', data);
-        var textboxValue = document.getElementById("searchName").value;
-        product.find({name: textboxValue}, (error, data)=>{
+        
+        product.find({name: req.body.searchName}, (error, data)=>{
                 console.log(data);
-        res.render('admin/products', {admin:true, Product: convertToArrayObjects(data)});
-        // //});
+        res.render('admin/searchProduct', {admin:true, products: convertToArrayObjects(data)});
         });
+        
     }
 
 
@@ -198,27 +194,6 @@ class AdminController {
      }
 
      dashboard(req, res){
-        async function countComeback(id){
-            let client = await MongoClient.connect(url);
-            let db = client.db("test");
-            let count = await db.collection("orders").find({_id: id}).count();
-            return count;
-        }
-
-        async function renDashBoard(){
-            //take Comeback Ratting
-            let client = await MongoClient.connect(url);
-            let db = client.db("test");
-            let users = await db.collection("users").find().toArray();
-            
-            var counting = 0;
-            users.forEach(element=>{
-                console.log(countComeback(element._id));
-                if(countComeback(element._id)>1){
-                    counting = counting+1;
-                }
-            })
-
             Order.find({})
             .then(orders=>{
                 var waiting = 0;
@@ -248,7 +223,14 @@ class AdminController {
                         order.forEach(element => {
                             totalOrder = totalOrder+1;
                         });
-    
+                        
+                        var confirmedOrderRating = 0;
+                        order.forEach(element=>{
+                            if(element.status == "Completed"){
+                                confirmedOrderRating++;
+                            }
+                        })
+                        confirmedOrderRating = confirmedOrderRating /  totalOrder * 100;
                         Account.find({})
                         .then(user=>{
                             var totalUser = 0;
@@ -259,17 +241,6 @@ class AdminController {
                                 else
                                     totalAdmin = totalAdmin+1;
                             });
-                            var rattingComeBack = 0;
-                            // user.forEach(element => {
-                            //     Order.count({user: element._id})
-                            //     .then(count=>{
-                            //         if(count>1){
-                            //             rattingComeBack = rattingComeBack + 1;
-                            //             console.log(rattingComeBack)
-                            //         }
-                            //     })
-                            // });
-                            var rattingResult = rattingComeBack / totalOrder;
                             res.render('admin/dashboard',{
                                 admin: true, 
                                 waiting: waiting, 
@@ -280,7 +251,7 @@ class AdminController {
                                 order: totalOrder,
                                 user: totalUser,
                                 admin: totalAdmin,
-                                ratting: counting
+                                orderratting: confirmedOrderRating
                             })
                         })
     
@@ -288,11 +259,7 @@ class AdminController {
                     
                 })
                 
-            })
-        }
-
-        renDashBoard();
-        
+            })    
      }
 
 }
